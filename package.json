@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/brian-walvoord/project-greenfield/issues"
   },
-  "homepage": "https://github.com/brian-walvoord/project-greenfield#readme"
+  "homepage": "https://github.com/brian-walvoord/project-greenfield#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
