@@ -18,7 +18,7 @@ function App() {
   const [info, setInfo] = useState(null);
   // const [num, setNum] = useState(0);
 
-  const Fetch = async () => {
+  const fetch = () => {
     return fetch('/test')
     .then((data) => {
       return data.json();
@@ -43,8 +43,8 @@ function App() {
       </Row>
     </Container>*/}
 
-    <Button variant="outline-primary" onClick={Fetch}>Fetch</Button>{' '}
-    {info ? info.map(user => <div key={user.id}>{JSON.stringify(user)}</div>) : <div></div>}
+    <Button variant="outline-primary" onClick={fetch}>Fetch</Button>{' '}
+    {info}
     {/* <button type="button" class="btn-success" onClick={fetch}>
           Fetch info:
     </button> */}

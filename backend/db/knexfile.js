@@ -1,4 +1,4 @@
-require("dotenv").config({path: "./.env.local"});
+require('dotenv').config({path: "./../../.env.local",});
 
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
@@ -18,9 +18,9 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-        database: process.env.DB_NAME,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME || "sagaproject",
+        user: process.env.DB_USER || "postgres",
+        password: process.env.DB_PASSWORD || "Osaka"
     },
     migrations: {
         directory: "./migrations"
