@@ -10,6 +10,11 @@ require("dotenv").config({path: "./.env.local"});
 const API_KEY = process.env.API_KEY_TMDB
 
 
+// have node serve the files for our built React app
+const path = require('path');
+app.use(express.static(path.resolve(__dirname, '../frontend/build')));
+
+
 app.use(express.json());
 
 app.get("/movieGenres", (req, res) => {
@@ -39,6 +44,11 @@ app.get("/reviewsMovie/:movieID" , (req,res) => {
     .then((result) => result.json())
     .then((object) => {res.send(object)})
 })
+
+// GET requests not handled will return our React app
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"))
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
