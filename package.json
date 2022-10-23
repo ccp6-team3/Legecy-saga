@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon backend/server.js",
     "serve": "node backend/server.js",
-    "build": "npm run migrate:latest && npm run seed:data && cd frontend && npm install && npm run build",
+    "build": "npm install && npm run migrate:latest && npm run seed:data && cd frontend && npm install && npm run build",
     "migrate:latest": "npx knex migrate:latest --knexfile backend/db/knexfile",
     "migrate:down": "npx knex migrate:down --knexfile backend/db/knexfile",
     "seed:data": "npx knex seed:run --knexfile backend/db/knexfile.js"
