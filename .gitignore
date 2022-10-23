@@ -4,3 +4,7 @@
 
 # nodule folder
 node_modules
+
+#others
+server-functions.js
+
