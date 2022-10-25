@@ -1,24 +1,34 @@
 // import logo from './logo.svg';
 import './App.css';
-import NavigationBar from './componets/Navbar.js'
+import NavigationBar from './components/Navbar.js' 
+import HomePage from './components/Homepage.js' 
+import Movie from './components/Movie.js' 
+import Shows from './components/Tvshows.js' 
+import Upcoming from './components/Upcoming.js' 
+// import Navbar from 'react-bootstrap/Navbar'
 
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Card from 'react-bootstrap/Card';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 
 
 
 
 function App() {
   const [info, setInfo] = useState(null);
+  const [navState, setNavState] = useState("home");
+  const [safe, setSafe] = useState(null);
+  const [movieTitle, setMovieTitle] = useState(null);
+  const [movieImg, setMovieImg] = useState(null);
+
   // const [num, setNum] = useState(0);
 
-  const Fetch = () => {
+  const fetchInfo = () => {
     return fetch('/test')
     .then((data) => {
       return data.json();
@@ -28,10 +38,53 @@ function App() {
     });
   };
 
+  if (navState === "home") {
+    setNavState(<HomePage movieTitle={movieTitle} movieImg={movieImg}/>)
+  } else if (navState === "movies") {
+    setNavState(<Movie/>)
+  } else if (navState === "shows") {
+    setNavState(<Shows/>)
+  } else if (navState === "upcoming") {
+    setNavState(<Upcoming/>)
+  }
+
 
   return (
     <>
-    <NavigationBar />
+    <NavigationBar navState={navState} setNavState={setNavState}/>
+    {navState}
+    {/* {() => {
+      if (navState === "home") {
+        return <p>Hello</p>;
+      } else if (navState === "movies") {
+      
+      } else if (navState === "shows") {
+      
+      } else if (navState === "upcoming") {
+        
+      }
+    }} */}
+
+    {/* {
+      navState === "home" ? 
+      <HomePage movieTitle={movieTitle} movieImg={movieImg}/>  
+      :
+      <div></div>
+    }
+    {
+      navState === "shows" ? 
+      <HomePage movieTitle={movieTitle} movieImg={movieImg}/>  
+      :
+      <div></div>
+    }
+    {
+      navState === "upcoming" ? 
+      <HomePage movieTitle={movieTitle} movieImg={movieImg}/>  
+      :
+      <div></div>
+    } */}
+    
+    
     {/*<Container fluid variant='primary' key='primary'>
       <Row>
         {/* <Col>
@@ -43,7 +96,7 @@ function App() {
       </Row>
     </Container>*/}
 
-    <Button variant="outline-primary" onClick={Fetch}>Fetch</Button>{' '}
+    <Button variant="outline-primary" onClick={fetchInfo}>Fetch</Button>{' '}
     {info ? <div>{JSON.stringify(info)}</div> : <div></div>}
     {/* <button type="button" class="btn-success" onClick={fetch}>
           Fetch info:
