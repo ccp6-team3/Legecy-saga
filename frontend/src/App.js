@@ -3,6 +3,8 @@ import './App.css';
 import NavigationBar from './components/Navbar.js' 
 import HomePage from './components/Homepage.js' 
 import Movie from './components/Movie.js' 
+import Shows from './components/Tvshows.js' 
+import Upcoming from './components/Upcoming.js' 
 // import Navbar from 'react-bootstrap/Navbar'
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -36,10 +38,21 @@ function App() {
     });
   };
 
+  if (navState === "home") {
+    setNavState(<HomePage movieTitle={movieTitle} movieImg={movieImg}/>)
+  } else if (navState === "movies") {
+    setNavState(<Movie/>)
+  } else if (navState === "shows") {
+    setNavState(<Shows/>)
+  } else if (navState === "upcoming") {
+    setNavState(<Upcoming/>)
+  }
+
 
   return (
     <>
     <NavigationBar navState={navState} setNavState={setNavState}/>
+    {navState}
     {/* {() => {
       if (navState === "home") {
         return <p>Hello</p>;

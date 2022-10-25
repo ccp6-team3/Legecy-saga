@@ -12,17 +12,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const NavigationBar = (props) => {
   const { navState, setNavState } = props;
 
-  const renderFunction = (state) => {
-    if (state === "home") {
+  // const renderFunction = (state) => {
+  //   if (state === "home") {
 
-    } else if (state === "movies") {
+  //   } else if (state === "movies") {
 
-    } else if (state === "shows") {
+  //   } else if (state === "shows") {
 
-    } else if (state === "upcoming") {
+  //   } else if (state === "upcoming") {
       
-    }
-  }
+  //   }
+  // }
 
   // const changeState = (state) => {
   //   return setNavState(state);
@@ -31,7 +31,7 @@ const NavigationBar = (props) => {
     return (
         <>
 
-            <Navbar.Brand onClick={() => setNavState("home")} href="#home" id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand>
+            <Navbar.Brand onClick={() => setNavState("home")} eventKey="#home" id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand>
             <Nav fill variant="tabs" defaultActiveKey="#home">
               <Nav.Item>
                 <Nav.Link onClick={() => {
