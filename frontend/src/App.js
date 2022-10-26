@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import NavigationBar from './components/Navbar.js' 
-import HomePage from './components/Homepage.js' 
+import HomePage from './components/homepage/Homepage.js' 
 import Movie from './components/Movie.js' 
 import Shows from './components/Tvshows.js' 
 import Upcoming from './components/Upcoming.js' 
@@ -96,8 +96,8 @@ function App() {
       </Row>
     </Container>*/}
 
-    <Button variant="outline-primary" onClick={fetchInfo}>Fetch</Button>{' '}
-    {info ? <div>{JSON.stringify(info)}</div> : <div></div>}
+    {/* <Button variant="outline-primary" onClick={fetchInfo}>Fetch</Button>{' '}
+    {info ? <div>{JSON.stringify(info)}</div> : <div></div>} */}
     {/* <button type="button" class="btn-success" onClick={fetch}>
           Fetch info:
     </button> */}

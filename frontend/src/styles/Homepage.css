@@ -1,4 +1,92 @@
 .moviePoster {
+  height: 67vh;
+  margin-top: 2.5vh;
+  width: auto;
+  margin-left: 15%;
+}
+
+.banner {
+  height: 75vh;
+  background: rgb(23, 23, 23);
+}
+
+.caption {
+  top: 5rem;
+  bottom: auto;
+  text-align: left;
+  max-width: 50%;
+  margin-left: 28%;
+}
+
+h1 {
+  color: white;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 50px;
+}
+
+h2, h3, p {
+  color: rgba(255, 255, 255, 0.851);
+}
+
+.movieSection {
+  padding-top: 3rem;
   height: auto;
-  width: 300px;
+  background-color: rgb(40, 50, 69);
+}
+
+.movieSection .moviePoster {
+  cursor: pointer;
+  width: 15rem;
+  height: auto;
+}
+
+.movieHeader, .showHeader {
+  background-color: rgb(40, 50, 69);
+  margin: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 0px;
+  font-size: 80px;
+  font-family:monospace;
+  font-weight: bold;
+}
+
+.showHeader {
+  padding-top: 5rem;
+}
+
+.movieTitle {
+  cursor: pointer;
+  margin-top: 5px;
+  text-align: center;
+  color: white;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.movieCard {
+  width: 20rem;
+  padding-bottom: 3rem;
+  background-color: rgb(40, 50, 69); 
+  border: none;
+  display: inline-block;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(24, 25, 32);
+  height: 10rem;
+}
+
+.disclaimer {
+  margin-top: 10px;
+}
+
+.dblogo {
+  height: 40px;
+  width: auto;
+  margin-bottom: 10px;
 }

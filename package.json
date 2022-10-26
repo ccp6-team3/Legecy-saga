@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon backend/server.js",
+    "start": "cd backend && npx nodemon server.js",
     "serve": "node backend/server.js",
     "build": "npm install && npm run migrate:latest && npm run seed:data && cd frontend && npm install && npm run build",
     "migrate:latest": "npx knex migrate:latest --knexfile backend/db/knexfile",
