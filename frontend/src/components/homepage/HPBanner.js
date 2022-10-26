@@ -16,7 +16,7 @@ const HPBanner = (props) => {
           />
           <Carousel.Caption className="caption firstCaption">
             <h1>{card.movieTitle}</h1>
-            <h2>Rating: <strong>{card.movierating} / 10</strong></h2>
+            <h2>Rating: <strong>{card.movieRating} / 10</strong></h2>
             <h3>Release Date</h3>
             <p>{card.movieDescription}</p>
             <Button>Click for details</Button>

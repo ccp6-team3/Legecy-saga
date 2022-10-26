@@ -18,13 +18,14 @@ const HomePage = () => {
         setMovieArray(arr.slice(5))
         setBannerArray(arr.slice(0, 5))
       })
-  })
+  },[])
+  // console.log(movieArray)
 
   useEffect(() => {
     fetch("/popularTV")
       .then(res => res.json())
       .then(arr => setShowArray(arr))
-  })
+  },[])
 
   return (
     <>

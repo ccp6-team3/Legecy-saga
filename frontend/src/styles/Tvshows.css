@@ -1,0 +1,12 @@
+.filter-container {
+  display: flex;
+}
+
+.btn-group {
+  justify-content: center;
+}
+
+.filter-title {
+  color: black;
+  font-family: monospace;
+}
