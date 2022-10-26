@@ -72,8 +72,6 @@ app.get("/reviewsMovie/:movieID" , (req,res) => {
     .then((object) => {res.send(object)})
 })
 
-
-
 app.get("/movieGenres", (req, res) => {
   const genresArray = [];
   fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
@@ -113,8 +111,92 @@ app.get("/popularTV", (req, res) => {
     return popularTV;
     })
     .then((resultArray) => res.send(resultArray))
-    
 })
+
+//New(not complete)
+app.get("/TvCredits/:TvId", (req, res) => {
+  const TvId = req.params.TvId;
+  const TvCredits = {};
+  TvCredits.cast = [];
+  TvCredits.director = [];
+  TvCredits.writer = [];
+
+  fetch(`https://api.themoviedb.org/3/tv/${TvId}/credits?api_key=${API_KEY}&language=en-US`)
+    .then((result) => result.json())
+    .then((object) => { 
+      object["cast"].forEach((element) => TvCredits.cast.push(element.name))
+      object.crew.forEach((element) => {
+        if (element.job === "Novel") {
+          TvCredits.writer.push(element.name);
+        }
+        else if (element.job === "Executive Producer") {
+          TvCredits.director.push(element.name);
+        }
+      })
+      return TvCredits;
+    })
+    .then((resultCredits) => res.send(resultCredits));
+})
+
+//New
+app.get("/reviewsTv/:TvId", (req, res) => {
+  const TvId = req.params.TvId;
+  const reviewArr = [];
+  fetch(`https://api.themoviedb.org/3/tv/${TvId}/reviews?api_key=${API_KEY}&language=en-US&page=1`)
+    .then((result) => result.json())
+    .then((object) => { object["results"]
+      .forEach((element) => {
+        reviewArr.push(element.content);
+      });
+      return reviewArr;
+    })
+    .then((resultArray) => res.send(resultArray));
+})
+
+//New
+app.get("/tvGenres", (req, res) => {
+  const arrGenres = [];
+  fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
+    .then((result) => result.json())
+    .then((object) => { object["genres"]
+      .forEach((element) => {
+      arrGenres.push(element);
+      });
+      return arrGenres;
+    })
+    .then((resultArray) => res.send(resultArray));
+})
+
+//New
+app.get("/tvGenresId", (req, res) => {
+  const arrGenresId = [];
+  fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
+    .then((result) => result.json())
+    .then((object) => { object["genres"]
+      .forEach((element) => {
+        arrGenresId.push(element.id);
+      });
+      return arrGenresId;
+    })
+    .then((resultArray) => res.send(resultArray));
+})
+
+//New
+app.get("/tvGenresName", (req, res) => {
+  const arrGenresName = [];
+  fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
+    .then((result) => result.json())
+    .then((object) => { object["genres"]
+      .forEach((element) => {
+        arrGenresName.push(element.name);
+      });
+      return arrGenresName;
+    })
+    .then((resultArray) => res.send(resultArray));
+})
+
+
+
 // GET requests not handled will return our React app
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"))
