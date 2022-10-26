@@ -241,6 +241,15 @@ app.get("/popularTV", (req, res) => {
     .then((resultArray) => res.send(resultArray));
 });
 
+//NOT FINSIHED!!! Need to know how we send the information from frontend
+app.post("/userReviewToDB", (req,res) => {
+  req.on("data", (newMovieReview) => {
+    const contentString = `${newMovieReview}`;
+    console.log(contentString)
+    knex("movie_reviews").insert([{movie_id: ""},{review: ""}])
+    res.send("A new movie review has been added to our DB");
+  });
+})
 
 //New(not complete)
 app.get("/TvCredits/:TvId", (req, res) => {
