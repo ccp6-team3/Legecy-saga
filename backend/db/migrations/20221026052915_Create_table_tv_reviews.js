@@ -8,7 +8,6 @@ exports.up = function(knex) {
         table.increments("id").primary(); // Set this column as the primary key
         table
         .integer("tv_show_id", 32)
-        .unique() // This is a constraint that prevents duplicate emails in the table
         .notNullable()
         .index(); // Adding an index makes searching by tv_show_id faster
       table.string("review", 4000);
