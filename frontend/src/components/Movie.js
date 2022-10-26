@@ -49,7 +49,7 @@ const Movie = () => {
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => setGenreState(filterByGenre(arr.name))} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => setGenreState(filterByGenre(arr.id))} >{arr.name}</NavDropdown.Item>
     )
   }
   const mapOtherArr = (arr) => {
