@@ -30,16 +30,25 @@ const NavigationBar = (props) => {
 
     return (
         <>
+          <div className="title-background">
+            <h1 onClick={() => setNavState("home")} className="title">saga</h1>
+          </div>
 
-            <Navbar.Brand onClick={() => setNavState("home")} id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand>
-            <Nav fill variant="tabs" defaultActiveKey="#home">
+            {/* <Navbar.Brand onClick={() => setNavState("home")} id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand> */}
+            <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
+              <Nav.Item className="nav-item">
+                <Nav.Link onClick={() => {
+                  setNavState("home")
+                }}
+                eventKey="#home">Home</Nav.Link>
+              </Nav.Item>
               <Nav.Item>
                 <Nav.Link onClick={() => {
                   setNavState("movie")
                   // renderFunction(navState)
                   }
                 }
-                eventKey="#movie"> Movies</Nav.Link>
+                eventKey="#movie">Movies</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link onClick={() => {

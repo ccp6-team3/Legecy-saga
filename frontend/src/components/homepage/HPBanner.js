@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 
 const HPBanner = (props) => {
-  const { bannerArray } = props;
+  const { bannerArray, setMoviePopup, setSelection } = props;
 
   const renderCard = (card) => {
     return (
@@ -17,9 +17,14 @@ const HPBanner = (props) => {
           <Carousel.Caption className="caption firstCaption">
             <h1>{card.movieTitle}</h1>
             <h2>Rating: <strong>{card.movieRating} / 10</strong></h2>
-            <h3>Release Date</h3>
+            <h3>Release: {card.releaseDate}</h3>
             <p>{card.movieDescription}</p>
-            <Button>Click for details</Button>
+            <Button 
+              onClick={() => {
+                setMoviePopup(true);
+                setSelection(card);
+              }}
+            >Click for details</Button>
           </Carousel.Caption>
         </Carousel.Item>
     )
