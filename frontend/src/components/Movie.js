@@ -13,7 +13,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Movie = () => {
   const [movieSort, setMovieSort] = useState([]);
   const [movieGenres, setMovieGenres] = useState([]);
-  const [genreState, setGenreState] = useState([]);
   const [movieArray, setMovieArray] = useState([]);
 
   useEffect(() => {
@@ -44,6 +43,18 @@ const Movie = () => {
     })
   }
 
+  const filterByRating = (rating) => {
+    fetch("/searchMovies", {
+      headers: {
+        'rating': rating
+      }
+    })
+    .then((data) => data.json())
+    .then((arr) => {  
+      setMovieArray(arr.slice(0,4))
+    })
+  }
+
   const movieCards = (arrayEl) => {
     return (
       <Card key={arrayEl.movieID} className="movieCard">
@@ -57,15 +68,15 @@ const Movie = () => {
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => setGenreState(filterByGenre(arr.id))} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
     )
   }
 
-  let movieRateArr = [1,2,3,4,5,6,7,8,9];
+  let movieRateArr = [0,1,2,3,4,5,6,7,8,9];
 
   const mapMovieRate = (i) => {
     return (
-      <NavDropdown.Item href={`#${i}`}>{i} - {i+1}</NavDropdown.Item>
+      <NavDropdown.Item href={`#${i}`} onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
       )
   }
 
@@ -82,7 +93,7 @@ const Movie = () => {
         <div >
           <h1 id="filter-by">Filter By:</h1>
         </div>
-        {/* <Navbar.Brand href="#">Navbar scroll</Navbar.Brand> */}
+
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -98,24 +109,10 @@ const Movie = () => {
               {movieRateArr.map(mapMovieRate)}
             </NavDropdown>
 
-            {/* <NavDropdown title="Year" id="navbarScrollingDropdown">
-           
-            </NavDropdown> */}
             <NavDropdown title="Other" id="navbarScrollingDropdown">
               {movieSort.map(mapOtherArr)}
             </NavDropdown>
           </Nav>
-
-          {/* search bar
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form> */}
           
         </Navbar.Collapse>
       </Container>
