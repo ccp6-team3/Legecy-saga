@@ -29,6 +29,13 @@ function App() {
 
   // const [num, setNum] = useState(0);
 
+
+  useEffect(() => {
+    fetch("/upcomingMovies")
+      .then(res => res.json())
+      .then(arr => setNewMovieArray(arr))
+  }, []);
+
   const fetchInfo = () => {
     return fetch('/test')
     .then((data) => {
@@ -46,7 +53,7 @@ function App() {
   } else if (navState === "shows") {
     setNavState(<Shows/>)
   } else if (navState === "upcoming") {
-    setNavState(<Upcoming newMovieArray={newMovieArray} setNewMovieArray={setNewMovieArray}/>)
+    setNavState(<Upcoming newMovieArray={newMovieArray} />)
   }
   // console.log(navState)
 
