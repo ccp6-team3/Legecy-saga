@@ -90,3 +90,9 @@ h2, h3, p {
   width: auto;
   margin-bottom: 10px;
 }
+
+#filter-by{
+  color: black;
+  font: 2rem monospace; 
+  /* font-family: monospace; */
+}

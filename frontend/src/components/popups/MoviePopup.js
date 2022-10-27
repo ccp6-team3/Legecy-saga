@@ -5,6 +5,10 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import Reviews from './Reviews.js';
 import HPFooter from '../homepage/HPFooter';
 
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
+
 const MoviePopup = (props) => {
   const { setMoviePopup, selection } = props;
 
@@ -13,8 +17,7 @@ const MoviePopup = (props) => {
   }
 
   return (
-    <div className="popup-page">
-      <div className="popup-header"></div>
+    <Modal show={true} onHide={closePopup}>
       <Card className="popup-container">
         <CloseButton className="closeBtn" onClick={closePopup}/>
         <Card.Img className="cardImg" src={selection.moviePoster}></Card.Img>
@@ -26,8 +29,22 @@ const MoviePopup = (props) => {
         </Card.Body>
         <Reviews />
       </Card>
-      <HPFooter />
-    </div>
+    </Modal>
+    // <div className="popup-page">
+    //   <div className="popup-header"></div>
+      // <Card className="popup-container">
+      //   <CloseButton className="closeBtn" onClick={closePopup}/>
+      //   <Card.Img className="cardImg" src={selection.moviePoster}></Card.Img>
+      //   <Card.Body className="cardBody">
+      //     <h1 className="description">{selection.movieTitle}</h1>
+      //     <h2 className="description">Rating: <strong>{selection.movieRating} / 10</strong></h2>
+      //     <h3 className="description">Release: {selection.releaseDate}</h3>
+      //     <p className="description">{selection.movieDescription ? selection.movieDescription : <em>*No description*</em>}</p>
+      //   </Card.Body>
+      //   <Reviews />
+      // </Card>
+    //   <HPFooter />
+    // </div>
   )
 }
 

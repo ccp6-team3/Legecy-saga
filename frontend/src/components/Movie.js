@@ -1,9 +1,10 @@
-import "../styles/Movie.css";
+import "../styles/Homepage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Card from "react-bootstrap/Card";
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,7 +14,7 @@ const Movie = () => {
   const [movieSort, setMovieSort] = useState([]);
   const [movieGenres, setMovieGenres] = useState([]);
   const [genreState, setGenreState] = useState([]);
-  // const [movieArray, setMovieArray] = useState([]);
+  const [movieArray, setMovieArray] = useState([]);
 
   useEffect(() => {
     fetch("/movieGenres")
@@ -39,22 +40,24 @@ const Movie = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      console.log(arr)
-     return "hi" 
+      setMovieArray(arr.slice(0,4))
     })
   }
-  
+
+  const movieCards = (arrayEl) => {
+    return (
+      <Card key={arrayEl.movieID} className="movieCard">
+        <Card.Img className="moviePoster" alt={`${arrayEl.movieTitle} poster`} src={arrayEl.moviePoster} />
+        <Card.Title className="movieTitle">{arrayEl.movieTitle}</Card.Title>
+      </Card>
+    )
+  }
 
   
 
   const mapGenresArr = (arr) => {
     return (
       <NavDropdown.Item href={`#${arr.name}`} onClick = {() => setGenreState(filterByGenre(arr.id))} >{arr.name}</NavDropdown.Item>
-    )
-  }
-  const mapOtherArr = (arr) => {
-    return (
-      <NavDropdown.Item href={`#${arr}`}>{arr}</NavDropdown.Item>
     )
   }
 
@@ -64,6 +67,12 @@ const Movie = () => {
     return (
       <NavDropdown.Item href={`#${i}`}>{i} - {i+1}</NavDropdown.Item>
       )
+  }
+
+  const mapOtherArr = (arr) => {
+    return (
+      <NavDropdown.Item href={`#${arr}`}>{arr}</NavDropdown.Item>
+    )
   }
 
   return(
@@ -112,7 +121,9 @@ const Movie = () => {
       </Container>
     </Navbar>
 
-    <p id="Action">Action</p>
+    <div className="movieSection">
+      {movieArray.length>0 ? movieArray.map(movieCards) : <div></div>}
+    </div>
 
   </>
   )

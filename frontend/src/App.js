@@ -66,7 +66,10 @@ function App() {
   return (
     <>
     <NavigationBar navState={navState} setNavState={setNavState}/>
-    {moviePopup ? <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/> : showPopup ? <ShowPopup selection={selection} setShowPopup={setShowPopup}/> : navState}
+    {navState}
+    {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/>}
+    {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup}/>}
+    {/* {moviePopup ? <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/> : showPopup ? <ShowPopup selection={selection} setShowPopup={setShowPopup}/> : navState} */}
     {/* {() => {
       if (navState === "home") {
         return <p>Hello</p>;
