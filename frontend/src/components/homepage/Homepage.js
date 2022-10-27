@@ -6,7 +6,9 @@ import HPMovies from "./HPMovies.js";
 import HPShows from "./HPShows.js";
 import HPFooter from "./HPFooter";
 
-const HomePage = () => {
+const HomePage = (props) => {
+  const { setMoviePopup, setShowPopup, setSelection } = props;
+
   const [movieArray, setMovieArray] = useState([]);
   const [bannerArray, setBannerArray] = useState([]);
   const [showArray, setShowArray] = useState([]);
@@ -29,11 +31,11 @@ const HomePage = () => {
 
   return (
     <>
-      <HPBanner bannerArray={bannerArray} />
+      <HPBanner setSelection={setSelection} setMoviePopup={setMoviePopup} bannerArray={bannerArray} />
       <h1 className="movieHeader">Popular Movies</h1>
-      <HPMovies movieArray={movieArray} />
+      <HPMovies setSelection={setSelection} setMoviePopup={setMoviePopup} movieArray={movieArray} />
       <h1 className="showHeader">Popular TV Shows</h1>
-      <HPShows showArray={showArray} />
+      <HPShows setSelection={setSelection} setShowPopup={setShowPopup} showArray={showArray} />
       <HPFooter />
     </>
   )

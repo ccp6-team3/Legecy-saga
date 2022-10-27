@@ -5,6 +5,8 @@ import HomePage from './components/homepage/Homepage.js'
 import Movie from './components/Movie.js' 
 import Shows from './components/Tvshows.js' 
 import Upcoming from './components/Upcoming.js' 
+import MoviePopup from './components/popups/MoviePopup.js'
+import ShowPopup from './components/popups/ShowPopup.js'
 // import Navbar from 'react-bootstrap/Navbar'
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,6 +26,9 @@ function App() {
   const [navState, setNavState] = useState("home");
   const [safe, setSafe] = useState(null);
   const [newMovieArray, setNewMovieArray] = useState([]);
+  const [moviePopup, setMoviePopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selection, setSelection] = useState([])
   // const [movieTitle, setMovieTitle] = useState(null);
   // const [movieImg, setMovieImg] = useState(null);
 
@@ -47,13 +52,13 @@ function App() {
   };
 
   if (navState === "home") {
-    setNavState(<HomePage/>)
+    setNavState(<HomePage setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
   } else if (navState === "movie") {
-    setNavState(<Movie/>)
+    setNavState(<Movie />)
   } else if (navState === "shows") {
-    setNavState(<Shows/>)
+    setNavState(<Shows />)
   } else if (navState === "upcoming") {
-    setNavState(<Upcoming newMovieArray={newMovieArray} />)
+    setNavState(<Upcoming setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
   }
   // console.log(navState)
 
@@ -61,7 +66,7 @@ function App() {
   return (
     <>
     <NavigationBar navState={navState} setNavState={setNavState}/>
-    {navState}
+    {moviePopup ? <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/> : showPopup ? <ShowPopup selection={selection} setShowPopup={setShowPopup}/> : navState}
     {/* {() => {
       if (navState === "home") {
         return <p>Hello</p>;
