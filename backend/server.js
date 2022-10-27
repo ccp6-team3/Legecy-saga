@@ -70,11 +70,13 @@ app.get("/movieCredits", (req, res) => {
 //Get request to get reviews for a movie given the movie ID
 app.get("/reviewsMovie", async (req, res) => {
   const movieID = req.get("movieID");
+  console.log(movieID)
+  //const movieIDNumber = Number(movieID)
   const reviewsArray = [];
   const UsersReviews = await knex
     .select("review")
     .from("movie_reviews")
-    .where("movie_id", "=", movieID);
+    .where("movie_id", "=", Number(movieID));
   await UsersReviews.forEach((review) => {
     let userReview = {};
     userReview.author = "Anonymous";
@@ -85,16 +87,16 @@ app.get("/reviewsMovie", async (req, res) => {
     `https://api.themoviedb.org/3/movie/${movieID}/reviews?api_key=${API_KEY}&language=en-US&page=1`
   )
     .then((result) => result.json())
-    .then((object) => {
-      object.results.forEach((TMDBreview) => {
-        let userReview = {};
-        userReview.author = TMDBreview.author;
-        userReview.review = TMDBreview.content;
-        reviewsArray.push(userReview);
-      });
-      return reviewsArray;
-    })
-    .then((FinalArray) => res.send(FinalArray));
+    // .then((object) => {
+    //   object["results"].forEach((TMDBreview) => {
+    //     let userReview = {};
+    //     userReview.author = TMDBreview.author;
+    //     userReview.review = TMDBreview.content;
+    //     reviewsArray.push(userReview);
+    //   });
+    //   return reviewsArray;
+    // })
+    // .then((FinalArray) => res.send(FinalArray));
 });
 
 //Search movies with different parameters
