@@ -5,13 +5,7 @@ import { useEffect } from "react";
 
 
 const Upcoming = (props) => {
-  const { newMovieArray, setNewMovieArray } = props;
-
-  useEffect(() => {
-    fetch("/upcomingMovies")
-      .then(res => res.json())
-      .then(arr => setNewMovieArray(arr))
-  }, []);
+  const { newMovieArray } = props;
 
   const renderCard = (card) => {
     return (
