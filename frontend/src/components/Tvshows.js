@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Card from "react-bootstrap/Card";
+
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -12,8 +14,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Tvshows = () => {
   const [showSort, setShowSort] = useState([]);
   const [showGenres, setShowGenres] = useState([]);
-  const [genreState, setGenreState] = useState([]);
-  // const [movieArray, setMovieArray] = useState([]);
+  const [showArray, setShowArray] = useState([]);
 
   useEffect(() => {
     fetch("/tvGenres")
@@ -22,35 +23,62 @@ const Tvshows = () => {
       setShowGenres(arr);
     })
   },[])
+  
+  // console.log(showGenres)
 
-  // useEffect(() => {
-  //   fetch("/movieSortBy")
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     setMovieSort(arr);
-  //   })
-  // },[])
+  useEffect(() => {
+    fetch("/tvSortBy")
+    .then((data) => data.json())
+    .then((arr) => {  
+      setShowSort(arr);
+    })
+  },[])
 
   const filterByGenre = (genre) => {
-    fetch("/searchMovies", {
+    fetch("/searchTV", {
       headers: {
         'genre': genre
       }
     })
     .then((data) => data.json())
     .then((arr) => {  
-      console.log(arr)
-     return "hi" 
+      setShowArray(arr.slice(0,4)) 
     })
   }
-  
 
-  
+  const filterByRating = (rating) => {
+    fetch("/searchTV", {
+      headers: {
+        'rating': rating
+      }
+    })
+    .then((data) => data.json())
+    .then((arr) => {  
+      setShowArray(arr.slice(0,4))
+    })
+  }
+
+  const showCards = (arrayEl) => {
+    return (
+      <Card key={arrayEl.TvId} className="movieCard">
+        <Card.Img className="moviePoster" alt={`${arrayEl.TvTitle} poster`} src={arrayEl.TvPoster} />
+        <Card.Title className="movieTitle">{arrayEl.TvTitle}</Card.Title>
+      </Card>
+    )
+  }
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => setGenreState(filterByGenre(arr.id))} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
     )
+  }
+
+  let showRateArr = [0,1,2,3,4,5,6,7,8,9];
+
+  const mapShowRate = (i) => {
+    return (
+      <NavDropdown.Item href={`#${i}`} onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
+      )
   }
 
   const mapOtherArr = (arr) => {
@@ -59,14 +87,6 @@ const Tvshows = () => {
     )
   }
 
-  // let movieRateArr = [1,2,3,4,5,6,7,8,9];
-
-  // const mapMovieRate = (i) => {
-  //   return (
-  //     <NavDropdown.Item href={`#${i}`}>{i} - {i+1}</NavDropdown.Item>
-  //     )
-  // }
-
   return(
   <>
   <Navbar bg="light" expand="lg">
@@ -74,7 +94,6 @@ const Tvshows = () => {
         <div >
           <h1 id="filter-by">Filter By:</h1>
         </div>
-        {/* <Navbar.Brand href="#">Navbar scroll</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -86,34 +105,23 @@ const Tvshows = () => {
               {showGenres.map(mapGenresArr)}
             </NavDropdown>
 
-            {/* <NavDropdown title="Rating" id="navbarScrollingDropdown">
-              {movieRateArr.map(mapMovieRate)}
-            </NavDropdown> */}
+            <NavDropdown title="Rating" id="navbarScrollingDropdown">
+              {showRateArr.map(mapShowRate)}
+            </NavDropdown>
 
-            {/* <NavDropdown title="Year" id="navbarScrollingDropdown">
-           
-            </NavDropdown> */}
-            {/* <NavDropdown title="Other" id="navbarScrollingDropdown">
-              {movieSort.map(mapOtherArr)}
-            </NavDropdown> */}
+
+            <NavDropdown title="Other" id="navbarScrollingDropdown">
+              {showSort.map(mapOtherArr)}
+            </NavDropdown>
           </Nav>
-
-          {/* search bar
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form> */}
           
         </Navbar.Collapse>
       </Container>
     </Navbar>
 
-    <p id="Action">Action</p>
+    <div className="movieSection">
+      {showArray.length>0 ? showArray.map(showCards) : <div></div>}
+    </div>
 
   </>
   )
