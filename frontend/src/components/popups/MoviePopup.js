@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Popup.css";
+import { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
 import Reviews from './Reviews.js';
@@ -16,6 +17,25 @@ const MoviePopup = (props) => {
     setMoviePopup(false)
   }
 
+  // const [reviews, setReviews] = useState([])
+  // const getReviews = (movieID) =>{
+  //   fetch("/reviewsMovie", {
+  //     headers: {
+  //       'movieID': movieID
+  //     }
+  //   })
+  //   .then((data) => data.json())
+  //   .then((arr) => {  
+  //     setReviews(arr)
+  //   })
+  // }
+  // useEffect(() => {
+  //   getReviews(movieID)
+  // },[movieID])
+
+
+  
+
   return (
     <Modal show={true} onHide={closePopup}>
       <Card className="popup-container">
@@ -27,7 +47,7 @@ const MoviePopup = (props) => {
           <h3 className="description">Release: {selection.releaseDate}</h3>
           <p className="description">{selection.movieDescription ? selection.movieDescription : <em>*No description*</em>}</p>
         </Card.Body>
-        <Reviews />
+        <Reviews selection={selection} />
       </Card>
     </Modal>
     // <div className="popup-page">
