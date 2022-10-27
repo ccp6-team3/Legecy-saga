@@ -275,22 +275,34 @@ app.get("/TvCredits/:TvId", (req, res) => {
     .then((resultCredits) => res.send(resultCredits));
 })
 
-//New
-app.get("/reviewsTv/:TvId", (req, res) => {
+//should connect database
+app.get("/reviewsTv/:TvId", async (req, res) => {
   const TvId = req.params.TvId;
   const reviewArr = [];
+  const UsersReviews = await knex
+    .select("review")
+    .from("tv_reviews")
+    .where("tv_show_id", "=", TvId);
+  await UsersReviews.forEach((review) => {
+    let userReview = {};
+    userReview.author = "Anonymous";
+    userReview.review = review.review;
+    reviewArr.push(userReview);
+  });
   fetch(`https://api.themoviedb.org/3/tv/${TvId}/reviews?api_key=${API_KEY}&language=en-US&page=1`)
     .then((result) => result.json())
     .then((object) => { object["results"]
       .forEach((element) => {
-        reviewArr.push(element.content);
+        let reviewFromTMDB = {}
+        reviewFromTMDB.author = element.author;
+        reviewFromTMDB.review = element.content;
+        reviewArr.push(reviewFromTMDB);
       });
       return reviewArr;
     })
     .then((resultArray) => res.send(resultArray));
 })
 
-//New
 app.get("/tvGenres", (req, res) => {
   const arrGenres = [];
   fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
@@ -304,7 +316,6 @@ app.get("/tvGenres", (req, res) => {
     .then((resultArray) => res.send(resultArray));
 })
 
-//New
 app.get("/tvGenresId", (req, res) => {
   const arrGenresId = [];
   fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
@@ -318,7 +329,7 @@ app.get("/tvGenresId", (req, res) => {
     .then((resultArray) => res.send(resultArray));
 })
 
-//New
+
 app.get("/tvGenresName", (req, res) => {
   const arrGenresName = [];
   fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`)
@@ -331,6 +342,58 @@ app.get("/tvGenresName", (req, res) => {
     })
     .then((resultArray) => res.send(resultArray));
 })
+
+app.get("/topRatedTv", (req, res) => {
+  const topRatedTvShowArray = [];
+  fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`)
+  .then((result) => result.json())
+  .then((object) =>  { object["results"].forEach((element) => {
+    let tvInfo = {};
+    tvInfo.id = element.id;
+    tvInfo.title = element.name;
+    tvInfo.poster = imagePath + element.poster_path;
+    tvInfo.description = element.overview;
+    tvInfo.tvRating = element.vote_average;
+    tvInfo.releaseDate = element.first_air_date;
+    topRatedTvShowArray.push(tvInfo);
+  })
+  return topRatedTvShowArray;
+  })
+  .then((resultArray) => res.send(resultArray));
+})
+
+//Search TV show with different parmeters
+app.get("/searchTV", (req, res) => {
+  const genre = req.get("genre") ? "&with_genres=" + req.get("genre") : "";
+  const fromYear = req.get("fromYear") ? "&first_air_date.gte=" + req.get("fromYear") : "";
+  const untilYear = req.get("untilYear") ? "&first_air_date.lte=" + req.get("untilYear") : "";
+  const rating = req.get("rating") ? "&vote_average.gte=" + req.get("rating") : "";
+  const sort_by = req.get("sort_by") ? "&sort_by=" + req.get("sort_by") : "&sort_by=popularity.desc";
+  
+  const searchResultArray = [];
+  fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US${sort_by}${fromYear}${untilYear}&page=1${rating}${genre}&include_null_first_air_dates=false`)
+    .then((result) => result.json())
+    .then((object) => {
+      object["results"].forEach((element) => {
+        let TvInfo = {};
+        TvInfo.TvId = element.id;
+        TvInfo.TvPoster = imagePath + element.poster_path;
+        TvInfo.TvTitle = element.name;
+        TvInfo.TvDescription = element.overview;
+        TvInfo.TvRating = element.vote_average;
+        TvInfo.releaseDate = element.first_air_date;
+
+        searchResultArray.push(TvInfo);
+      })
+      return searchResultArray;
+    })
+    .then((resultArray) => res.send(resultArray));
+})
+
+app.get("/tvSortBy", (req, res) => {
+  res.send(["popularity.asc", "popularity.desc", "first_air_date.asc", "first_air_date.desc", "vote_average.asc", "vote_average.desc"])
+})
+
 // GET requests not handled will return our React app
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
