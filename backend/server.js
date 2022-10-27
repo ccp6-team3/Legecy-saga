@@ -70,13 +70,12 @@ app.get("/movieCredits", (req, res) => {
 //Get request to get reviews for a movie given the movie ID
 app.get("/reviewsMovie", async (req, res) => {
   const movieID = req.get("movieID");
-  console.log(movieID)
   //const movieIDNumber = Number(movieID)
   const reviewsArray = [];
   const UsersReviews = await knex
     .select("review")
     .from("movie_reviews")
-    .where("movie_id", "=", Number(movieID));
+    .where("movie_id", "=", Number(movieID))
   await UsersReviews.forEach((review) => {
     let userReview = {};
     userReview.author = "Anonymous";
@@ -87,16 +86,16 @@ app.get("/reviewsMovie", async (req, res) => {
     `https://api.themoviedb.org/3/movie/${movieID}/reviews?api_key=${API_KEY}&language=en-US&page=1`
   )
     .then((result) => result.json())
-    // .then((object) => {
-    //   object["results"].forEach((TMDBreview) => {
-    //     let userReview = {};
-    //     userReview.author = TMDBreview.author;
-    //     userReview.review = TMDBreview.content;
-    //     reviewsArray.push(userReview);
-    //   });
-    //   return reviewsArray;
-    // })
-    // .then((FinalArray) => res.send(FinalArray));
+    .then((object) => {
+      object["results"].forEach((TMDBreview) => {
+        let userReview = {};
+        userReview.author = TMDBreview.author;
+        userReview.review = TMDBreview.content;
+        reviewsArray.push(userReview);
+      });
+      return reviewsArray;
+    })
+    .then((FinalArray) => res.send(FinalArray));
 });
 
 //Search movies with different parameters
@@ -152,16 +151,9 @@ app.get("/movieSortBy", (req,res) => {
 
 //Get all the genres and their ID for movies"
 app.get("/movieGenres", (req, res) => {
-  //const genresArray = [];
   fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
-    .then((result) => result.json())
-    .then((object) =>  res.send(object["genres"]))
-    //   object["genres"].forEach((element) => {
-    //     genresArray.push({genreelement.name});
-    //   });
-    //   return genresArray;
-    // })
-    // .then((resultArray) => res.send(resultArray));
+  .then((result) => result.json())
+  .then((object) =>  res.send(object["genres"]))
 });
 
 //Get top rated movies
@@ -243,15 +235,18 @@ app.get("/popularTV", (req, res) => {
     .then((resultArray) => res.send(resultArray));
 });
 
-//NOT FINSIHED!!! Need to know how we send the information from frontend
-app.post("/userReviewToDB", (req,res) => {
-  req.on("data", (newMovieReview) => {
-    const contentString = `${newMovieReview}`;
-    console.log(contentString)
-    knex("movie_reviews").insert([{movie_id: ""},{review: ""}])
-    res.send("A new movie review has been added to our DB");
-  });
+app.post("/movie/userReviewToDB", (req,res) => {
+  knex("movie_reviews")
+  .insert({movie_id: Number(req.body.movieID), review: req.body.review})
+  .then(res.send("A new movie review has been added to our DB"))
 })
+
+app.post("/TV/userReviewToDB", (req,res) => {
+  knex("tv_reviews")
+  .insert({tv_show_id: Number(req.body.tv_show_id), review: req.body.review})
+  .then(res.send("A new movie review has been added to our DB"))
+})
+
 
 //New(not complete)
 app.get("/TvCredits/:TvId", (req, res) => {
@@ -278,13 +273,13 @@ app.get("/TvCredits/:TvId", (req, res) => {
 })
 
 //should connect database
-app.get("/reviewsTv/:TvId", async (req, res) => {
-  const TvId = req.params.TvId;
+app.get("/reviewsTv", async (req, res) => {
+  const TvId = req.get("TvId");
   const reviewArr = [];
   const UsersReviews = await knex
     .select("review")
     .from("tv_reviews")
-    .where("tv_show_id", "=", TvId);
+    .where("tv_show_id", "=", Number(TvId));
   await UsersReviews.forEach((review) => {
     let userReview = {};
     userReview.author = "Anonymous";
