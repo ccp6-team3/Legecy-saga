@@ -31,7 +31,7 @@ const NavigationBar = (props) => {
     return (
         <>
 
-            <Navbar.Brand onClick={() => setNavState("home")} eventKey="#home" id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand>
+            <Navbar.Brand onClick={() => setNavState("home")} id="navBrand" className="justify-content-md-center">Saga</Navbar.Brand>
             <Nav fill variant="tabs" defaultActiveKey="#home">
               <Nav.Item>
                 <Nav.Link onClick={() => {

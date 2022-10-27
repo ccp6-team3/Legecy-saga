@@ -23,10 +23,18 @@ function App() {
   const [info, setInfo] = useState(null);
   const [navState, setNavState] = useState("home");
   const [safe, setSafe] = useState(null);
-  const [movieTitle, setMovieTitle] = useState(null);
-  const [movieImg, setMovieImg] = useState(null);
+  const [newMovieArray, setNewMovieArray] = useState([]);
+  // const [movieTitle, setMovieTitle] = useState(null);
+  // const [movieImg, setMovieImg] = useState(null);
 
   // const [num, setNum] = useState(0);
+
+
+  useEffect(() => {
+    fetch("/upcomingMovies")
+      .then(res => res.json())
+      .then(arr => setNewMovieArray(arr))
+  }, []);
 
   const fetchInfo = () => {
     return fetch('/test')
@@ -39,14 +47,15 @@ function App() {
   };
 
   if (navState === "home") {
-    setNavState(<HomePage movieTitle={movieTitle} movieImg={movieImg}/>)
-  } else if (navState === "movies") {
+    setNavState(<HomePage/>)
+  } else if (navState === "movie") {
     setNavState(<Movie/>)
   } else if (navState === "shows") {
     setNavState(<Shows/>)
   } else if (navState === "upcoming") {
-    setNavState(<Upcoming/>)
+    setNavState(<Upcoming newMovieArray={newMovieArray} />)
   }
+  // console.log(navState)
 
 
   return (
