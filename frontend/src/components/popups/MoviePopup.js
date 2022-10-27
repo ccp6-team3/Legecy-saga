@@ -1,13 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Popup.css";
-import { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
 import Reviews from './Reviews.js';
-import HPFooter from '../homepage/HPFooter';
 
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 
 
 const MoviePopup = (props) => {
@@ -15,26 +12,7 @@ const MoviePopup = (props) => {
 
   const closePopup = () => {
     setMoviePopup(false)
-  }
-
-  // const [reviews, setReviews] = useState([])
-  // const getReviews = (movieID) =>{
-  //   fetch("/reviewsMovie", {
-  //     headers: {
-  //       'movieID': movieID
-  //     }
-  //   })
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     setReviews(arr)
-  //   })
-  // }
-  // useEffect(() => {
-  //   getReviews(movieID)
-  // },[movieID])
-
-
-  
+  }  
 
   return (
     <Modal show={true} onHide={closePopup}>

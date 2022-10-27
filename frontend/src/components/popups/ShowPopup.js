@@ -2,8 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/Popup.css";
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
-import Reviews from './Reviews.js';
-import HPFooter from '../homepage/HPFooter';
+import TV_Reviews from './TV_Reviews.js';
 import Modal from 'react-bootstrap/Modal'
 
 const ShowPopup = (props) => {
@@ -23,7 +22,7 @@ const ShowPopup = (props) => {
           <h2 className="description">Rating: <strong>{selection.TvRating} / 10</strong></h2>
           <p className="description">{selection.TvDescription ? selection.TvDescription : <em>*No Description*</em>}</p>
         </Card.Body>
-        <Reviews />
+        <TV_Reviews selection={selection}/>
       </Card>
     </Modal>
 

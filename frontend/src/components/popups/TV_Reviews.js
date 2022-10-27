@@ -10,33 +10,35 @@ import Button from 'react-bootstrap/Button';
 
 
 
-const Reviews = (props) => {
+const TV_Reviews = (props) => {
   const {selection} = props;
 
-  const movieID = selection.movieID
+  const TvID = selection.TvID
 
-  const [reviews, setReviews] = useState([])
+  console.log(TvID)
+
+  const [TVreviews, setTVReviews] = useState([])
   const [userReview, setUserReview] = useState("")
 
-  const getReviews = (movieID) => {
-    fetch("/reviewsMovie", {
+  const getTVReviews = (TvID) => {
+    fetch("/reviewsTv", {
           headers: {
-            'movieID': selection.movieID
+            'TvID': selection.TvID
           }
         })
         .then((data) => data.json())
         .then((arr) => {  
-          setReviews(arr)
+            setTVReviews(arr)
         })
   }
 
   useEffect(()=> {
-    getReviews(movieID)
+    getTVReviews(TvID)
   },[])
 
   const renderCard = (card) => {
     return (
-      <Card key={card.movieID} className="movieCard">
+      <Card key={card.TvID} className="movieCard">
         <Card.Title className="movieTitle">
           {card.author}
         </Card.Title>
@@ -48,14 +50,14 @@ const Reviews = (props) => {
   };
 
   const postReview = (userReview) => {
-    fetch("/movie/userReviewToDB", {
+    fetch("/TV/userReviewToDB", {
       method: "post",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        movieID: movieID,
+        tv_show_id: TvID,
         review: userReview
       })
     })
@@ -68,7 +70,7 @@ const Reviews = (props) => {
     <>
       <h5><em>Users Reviews:</em></h5>
       <div className="movieSection">
-        {reviews.map(renderCard)}
+        {TVreviews.map(renderCard)}
       </div>
       <h5><em>*This is the review submit form</em></h5>
       <Form>
@@ -86,4 +88,4 @@ const Reviews = (props) => {
   )
 }
 
-export default Reviews;
+export default TV_Reviews;
