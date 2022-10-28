@@ -10,7 +10,7 @@
 [saga](https://saga-hpnk.onrender.com/) uses javascript with react and react-bootstrap to render responsive UI/UX and runs a node.js server and a postgresql database.  
 
 # Features
-* Uses TBMD api to ensure only the latest data is displayed
+* Uses TMDB api to ensure only the latest data is displayed
 * Displays most popular movies and shows on the homepage
 * Filters through movies and shows by genre, ratings, and other filters
 * Displays upcoming films and release dates
