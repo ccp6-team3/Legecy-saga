@@ -80,7 +80,8 @@ const Movie = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setMovieArray(arr.slice(0,4))
+      // setMovieArray(arr.slice(0,10))
+      setMovieArray(arr)
     })
   }
 
@@ -92,7 +93,8 @@ const Movie = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setMovieArray(arr.slice(0,4))
+      // setMovieArray(arr.slice(0,10))
+      setMovieArray(arr)
     })
   }
 
@@ -104,7 +106,8 @@ const Movie = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setMovieArray(arr.slice(0,4))
+      // setMovieArray(arr.slice(0,10))
+      setMovieArray(arr)
     })
   }
 
