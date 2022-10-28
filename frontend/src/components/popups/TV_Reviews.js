@@ -28,7 +28,7 @@ const TV_Reviews = (props) => {
         })
         .then((data) => data.json())
         .then((arr) => {  
-            setTVReviews(arr)
+          setTVReviews(arr)
         })
   }
 
@@ -61,6 +61,7 @@ const TV_Reviews = (props) => {
         review: userReview
       })
     })
+    getTVReviews(TvID);
     showConfirmed();
   }
 

@@ -80,7 +80,7 @@ app.get("/reviewsMovie", async (req, res) => {
     let userReview = {};
     userReview.author = "Anonymous";
     userReview.review = review.review;
-    reviewsArray.push(userReview);
+    reviewsArray.unshift(userReview);
   });
   fetch(
     `https://api.themoviedb.org/3/movie/${movieID}/reviews?api_key=${API_KEY}&language=en-US&page=1`
@@ -284,7 +284,7 @@ app.get("/reviewsTv", async (req, res) => {
     let userReview = {};
     userReview.author = "Anonymous";
     userReview.review = review.review;
-    reviewArr.push(userReview);
+    reviewArr.unshift(userReview);
   });
   fetch(`https://api.themoviedb.org/3/tv/${TvId}/reviews?api_key=${API_KEY}&language=en-US&page=1`)
     .then((result) => result.json())
