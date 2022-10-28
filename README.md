@@ -1,4 +1,8 @@
-# <div align="center">Saga</br>*A movie and TV show reviewing platform*</div>
+<p align="center">
+  <img src="./saga.svg" />
+</p>
+
+# <div align="center">A movie and TV show reviewing platform</div>
 
 ### <div align="center">Contributors:</div>
 <div align="center">Brian</div>    
@@ -18,4 +22,3 @@
 
 #
 
-![saga logo](./saga.svg)
