@@ -18,8 +18,9 @@ const NavigationBar = (props) => {
 
   return (
     <>
+    
       <div className="title-background">
-        <h1 onClick={() => setNavState("home")} href="#home" className="title">saga</h1>
+        <h1 onClick={() => setNavState("home")} className="title">saga</h1>
         <Button className="float-end" size="lg" variant="outline-danger" onClick={() => setAdultFilter(toggleFilter)}>Safe mode: {`${adultFilter}`}</Button>
       </div>
       <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
