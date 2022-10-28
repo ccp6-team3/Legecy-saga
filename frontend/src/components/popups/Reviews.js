@@ -61,6 +61,7 @@ const Reviews = (props) => {
         review: userReview
       })
     })
+    getReviews(movieID)
     showConfirmed()
   }
 
