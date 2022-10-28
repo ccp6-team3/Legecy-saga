@@ -18,4 +18,4 @@
 
 #
 
-![saga logo]()
+![saga logo](./saga.svg)
