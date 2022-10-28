@@ -249,13 +249,13 @@ app.post("/TV/userReviewToDB", (req,res) => {
 
 
 //New(not complete)
-app.get("/TvCredits/:TvId", (req, res) => {
-  const TvId = req.params.TvId;
+app.get("/TvCredits/:TvID", (req, res) => {
+  const TvID = req.params.TvID;
   const TvCredits = {};
   TvCredits.cast = [];
   TvCredits.director = [];
   TvCredits.writer = [];
-  fetch(`https://api.themoviedb.org/3/tv/${TvId}/credits?api_key=${API_KEY}&language=en-US`)
+  fetch(`https://api.themoviedb.org/3/tv/${TvID}/credits?api_key=${API_KEY}&language=en-US`)
     .then((result) => result.json())
     .then((object) => { 
       object["cast"].forEach((element) => TvCredits.cast.push(element.name))
@@ -274,19 +274,19 @@ app.get("/TvCredits/:TvId", (req, res) => {
 
 //should connect database
 app.get("/reviewsTv", async (req, res) => {
-  const TvId = req.get("TvId");
+  const TvID = req.get("TvID");
   const reviewArr = [];
   const UsersReviews = await knex
     .select("review")
     .from("tv_reviews")
-    .where("tv_show_id", "=", Number(TvId));
+    .where("tv_show_id", "=", Number(TvID));
   await UsersReviews.forEach((review) => {
     let userReview = {};
     userReview.author = "Anonymous";
     userReview.review = review.review;
     reviewArr.unshift(userReview);
   });
-  fetch(`https://api.themoviedb.org/3/tv/${TvId}/reviews?api_key=${API_KEY}&language=en-US&page=1`)
+  fetch(`https://api.themoviedb.org/3/tv/${TvID}/reviews?api_key=${API_KEY}&language=en-US&page=1`)
     .then((result) => result.json())
     .then((object) => { object["results"]
       .forEach((element) => {
@@ -373,7 +373,7 @@ app.get("/searchTV", (req, res) => {
     .then((object) => {
       object["results"].forEach((element) => {
         let TvInfo = {};
-        TvInfo.TvId = element.id;
+        TvInfo.TvID = element.id;
         TvInfo.TvPoster = imagePath + element.poster_path;
         TvInfo.TvTitle = element.name;
         TvInfo.TvDescription = element.overview;

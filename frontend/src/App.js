@@ -54,9 +54,9 @@ function App() {
   if (navState === "home") {
     setNavState(<HomePage setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
   } else if (navState === "movie") {
-    setNavState(<Movie />)
+    setNavState(<Movie setSelection={setSelection} setMoviePopup={setMoviePopup} />)
   } else if (navState === "shows") {
-    setNavState(<Shows />)
+    setNavState(<Shows setSelection={setSelection} setShowPopup={setShowPopup} />)
   } else if (navState === "upcoming") {
     setNavState(<Upcoming setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
   }
