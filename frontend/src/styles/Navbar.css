@@ -20,10 +20,11 @@
 
 .title {
   color: rgb(255, 255, 255);
+  margin-bottom: 2rem;
   text-align: center;
   font-size: 100px;
   cursor: pointer;
-  width: 20rem;
+  width: 30rem;
   margin-left: auto;
   margin-right: auto;
   font-family:'Courier New', Courier, monospace;
