@@ -1,6 +1,7 @@
 import Nav from 'react-bootstrap/Nav'
 import '../styles/Navbar.css';
 import { useState } from "react";
+import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 
@@ -19,7 +20,7 @@ const NavigationBar = (props) => {
   return (
     <>
       <div className="title-background">
-        <h1 onClick={() => setNavState("home")} className="title">saga</h1>
+        <img className="title" alt="saga logo" src={logo} onClick={() => setNavState("home")} />
         <Button className="float-end" size="lg" variant="outline-danger" onClick={() => setAdultFilter(toggleFilter)}>Safe mode: {`${adultFilter}`}</Button>
       </div>
       <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
