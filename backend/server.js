@@ -70,7 +70,6 @@ app.get("/movieCredits", (req, res) => {
 //Get request to get reviews for a movie given the movie ID
 app.get("/reviewsMovie", async (req, res) => {
   const movieID = req.get("movieID");
-  //const movieIDNumber = Number(movieID)
   const reviewsArray = [];
   const UsersReviews = await knex
     .select("review")
@@ -182,8 +181,8 @@ app.get("/topRatedMovies", (req,res) => {
 //Get upcoming movies
 app.get("/upcomingMovies", (req,res) => {
   const upcomingMoviesArray = []
-  const region = req.get("region") ? "&region=" + req.get("region") : "";  
-  fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1${region}`)
+  const location = req.get("location") ? "&region=" + req.get("location") : "";  
+  fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1${location}`)
   .then((result) => result.json())
   .then((object) => {
     object["results"].forEach((element) => {
@@ -389,6 +388,13 @@ app.get("/searchTV", (req, res) => {
 
 app.get("/tvSortBy", (req, res) => {
   res.send(["popularity.asc", "popularity.desc", "first_air_date.asc", "first_air_date.desc", "vote_average.asc", "vote_average.desc"])
+})
+
+app.get("/userCountry", (req,res) => {
+  fetch("http://ip-api.com/json")
+  .then((result) => result.json())
+  .then((object) => object.countryCode)
+  .then((location) => res.send({location}))
 })
 
 // GET requests not handled will return our React app

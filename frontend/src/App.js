@@ -29,6 +29,7 @@ function App() {
   const [moviePopup, setMoviePopup] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [selection, setSelection] = useState([])
+  const [location, setLocation] = useState("")
   // const [movieTitle, setMovieTitle] = useState(null);
   // const [movieImg, setMovieImg] = useState(null);
 
@@ -36,10 +37,19 @@ function App() {
 
 
   useEffect(() => {
-    fetch("/upcomingMovies")
+    fetch("/userCountry")
+    .then(res => res.json())
+    .then(result => setLocation(result.location))
+  }, []);
+
+  useEffect(() => {
+    fetch("/upcomingMovies",{
+      headers: {
+      "location": location
+      }})
       .then(res => res.json())
       .then(arr => setNewMovieArray(arr))
-  }, []);
+  },[location])
 
   const fetchInfo = () => {
     return fetch('/test')
