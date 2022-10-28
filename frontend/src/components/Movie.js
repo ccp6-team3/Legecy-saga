@@ -15,22 +15,42 @@ const Movie = () => {
   const [movieGenres, setMovieGenres] = useState([]);
   const [movieArray, setMovieArray] = useState([]);
   // const [compoundFilter, setCompoundFilter] = useState({});
+  
+  const genreFetch = fetch("/movieGenres");
+  const ratingFetch = fetch("/movieSortBy");
 
   useEffect(() => {
-    fetch("/movieGenres")
-    .then((data) => data.json())
-    .then((arr) => {      
-      setMovieGenres(arr);
+    Promise.all([genreFetch,ratingFetch])
+    .then((promises) => {
+      // returns two promises that need to be json() and passed on to next .then
+      // return promises[0].json() // makes arr into genre array
+      return Promise.all(promises.map(dataArr => dataArr.json()))
+  
     })
+    .then((arr) => {   
+      // console.log(arr)   
+      setMovieGenres(arr[0]);
+      setMovieSort(arr[1]);
+    })
+
   },[])
 
-  useEffect(() => {
-    fetch("/movieSortBy")
-    .then((data) => data.json())
-    .then((arr) => {  
-      setMovieSort(arr);
-    })
-  },[])
+
+  // useEffect(() => {
+  //   fetch("/movieGenres")
+  //   .then((data) => data.json())
+  //   .then((arr) => {      
+  //     setMovieGenres(arr);
+  //   })
+  // },[])
+
+  // useEffect(() => {
+  //   fetch("/movieSortBy")
+  //   .then((data) => data.json())
+  //   .then((arr) => {  
+  //     setMovieSort(arr);
+  //   })
+  // },[])
 
   // combined search function that compounds searches 
   // const updateCompound = (input) => {
@@ -104,7 +124,7 @@ const Movie = () => {
       <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)}>{arr.name}</NavDropdown.Item>
     )
   }
-
+  
   let movieRateArr = [0,1,2,3,4,5,6,7,8,9];
 
   const mapMovieRate = (i) => {
@@ -179,6 +199,7 @@ const Movie = () => {
               {movieSort.map(mapOtherArr2)}
             </NavDropdown> */}
           </Nav>
+
           <Nav>
             <Button className="d-grid gap-2" variant="outline-dark" /*onClick={() => setCompoundFilter({})}*/>Reset Filters</Button>
           </Nav>

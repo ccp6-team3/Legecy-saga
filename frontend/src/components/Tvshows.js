@@ -18,23 +18,42 @@ const Tvshows = () => {
   const [showGenres, setShowGenres] = useState([]);
   const [showArray, setShowArray] = useState([]);
 
-  useEffect(() => {
-    fetch("/tvGenres")
-    .then((data) => data.json())
-    .then((arr) => {      
-      setShowGenres(arr);
-    })
-  },[])
-  
-  // console.log(showGenres)
+  const genreFetch = fetch("/tvGenres");
+  const ratingFetch = fetch("/tvSortBy");
 
   useEffect(() => {
-    fetch("/tvSortBy")
-    .then((data) => data.json())
-    .then((arr) => {  
-      setShowSort(arr);
+    Promise.all([genreFetch,ratingFetch])
+    .then((promises) => {
+      // returns two promises that need to be json() and passed on to next .then
+      // return promises[0].json() // makes arr into genre array
+      return Promise.all(promises.map(dataArr => dataArr.json()))
+  
     })
+    .then((arr) => {   
+      // console.log(arr)   
+      setShowGenres(arr[0]);
+      setShowSort(arr[1]);
+    })
+
   },[])
+
+  // useEffect(() => {
+  //   fetch("/tvGenres")
+  //   .then((data) => data.json())
+  //   .then((arr) => {      
+  //     setShowGenres(arr);
+  //   })
+  // },[])
+  
+  // // console.log(showGenres)
+
+  // useEffect(() => {
+  //   fetch("/tvSortBy")
+  //   .then((data) => data.json())
+  //   .then((arr) => {  
+  //     setShowSort(arr);
+  //   })
+  // },[])
 
   const filterByGenre = (genre) => {
     fetch("/searchTV", {
