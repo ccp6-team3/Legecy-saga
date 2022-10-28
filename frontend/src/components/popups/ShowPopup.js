@@ -13,7 +13,7 @@ const ShowPopup = (props) => {
   }
 
   return (
-    <Modal show={true} onHide={closePopup}>
+    <Modal size="lg" show={true} onHide={closePopup}>
       <Card className="popup-container">
         <CloseButton className="closeBtn" onClick={closePopup}/>
         <Card.Img className="cardImg" src={selection.TvPoster}></Card.Img>

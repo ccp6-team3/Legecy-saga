@@ -1,0 +1,44 @@
+.form-group {
+  text-align: center;
+}
+
+.review-success {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  color: black;
+  width: 20rem;
+  height: auto;
+}
+
+.form {
+  text-align: center;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-btn {
+  width: 20rem;
+  margin-top: .5rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-card {
+  background-color: rgb(40, 50, 69);
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 1rem;
+  border-radius: 2rem;
+}
+
+.review-title {
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+/* .review-text {
+
+} */

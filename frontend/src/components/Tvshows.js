@@ -63,7 +63,8 @@ const Tvshows = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setShowArray(arr.slice(0,4)) 
+      // setShowArray(arr.slice(0,10))
+      setShowArray(arr);    
     })
   }
 
@@ -75,8 +76,9 @@ const Tvshows = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setShowArray(arr.slice(0,4))
-    })
+      // setShowArray(arr.slice(0,10))
+      setShowArray(arr);    
+})
   }
 
   const filterByOther = (otherField) => {
@@ -87,7 +89,8 @@ const Tvshows = () => {
     })
     .then((data) => data.json())
     .then((arr) => {  
-      setShowArray(arr.slice(0,4))
+      // setShowArray(arr.slice(0,10))
+      setShowArray(arr);
     })
   }
 

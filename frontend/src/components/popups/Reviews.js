@@ -1,10 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/Popup.css";
+import "../../styles/Reviews.css";
 import { useState, useEffect } from "react";
 
 import Card from "react-bootstrap/Card";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 
 
@@ -17,6 +18,7 @@ const Reviews = (props) => {
 
   const [reviews, setReviews] = useState([])
   const [userReview, setUserReview] = useState("")
+  const [submit, setSubmit] = useState(false);
 
   const getReviews = (movieID) => {
     fetch("/reviewsMovie", {
@@ -36,11 +38,11 @@ const Reviews = (props) => {
 
   const renderCard = (card) => {
     return (
-      <Card key={card.movieID} className="movieCard">
-        <Card.Title className="movieTitle">
+      <Card key={card.movieID} className="review-card">
+        <Card.Title className="review-title">
           {card.author}
         </Card.Title>
-        <Card.Text>
+        <Card.Text className="review-text">
           {card.review}
         </Card.Text>
       </Card>
@@ -59,29 +61,29 @@ const Reviews = (props) => {
         review: userReview
       })
     })
+    showConfirmed()
   }
 
-
+  const showConfirmed = () => {
+    setSubmit(true);
+  }
 
 
   return (
     <>
-      <h5><em>Users Reviews:</em></h5>
-      <div className="movieSection">
-        {reviews.map(renderCard)}
-      </div>
-      <h5><em>*This is the review submit form</em></h5>
-      <Form>
-        <Form.Group>
+      <h5><em>Leave a review:</em></h5>
+      <Form className="form">
+        <Form.Group controlId="exampleForm.ControlTextarea1" className="form-group">
           <Form.Label>
             Your review will be anonymous, so please share your opinion.
           </Form.Label>
-          <Form.Control onChange={(e) => setUserReview(e.target.value)} type="text" placeholder="Write your review here" />
+          <Form.Control as="textarea" rows="3" className="review-input" onChange={(e) => setUserReview(e.target.value)} type="text" placeholder="Write your review here" />
         </Form.Group>
-        <Button onClick={() => {postReview(userReview)}} variant="primary">
-        Submit
-        </Button>
+        {submit ? <Alert className="review-success">🎉 Review submitted 🎉</Alert> : <Button className="submit-btn" onClick={() => {postReview(userReview)}} variant="outline-primary">Submit</Button>}
       </Form>
+      <div className="review-section">
+        {reviews.map(renderCard)}
+      </div>
     </>
   )
 }
