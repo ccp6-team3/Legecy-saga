@@ -13,7 +13,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Tvshows = () => {
+const Tvshows = (props) => {
+  const { setShowPopup, setSelection } = props;
+
   const [showSort, setShowSort] = useState([]);
   const [showGenres, setShowGenres] = useState([]);
   const [showArray, setShowArray] = useState([]);
@@ -96,9 +98,23 @@ const Tvshows = () => {
 
   const showCards = (arrayEl) => {
     return (
-      <Card key={arrayEl.TvId} className="movieCard">
-        <Card.Img className="moviePoster" alt={`${arrayEl.TvTitle} poster`} src={arrayEl.TvPoster} />
-        <Card.Title className="movieTitle">{arrayEl.TvTitle}</Card.Title>
+      <Card key={arrayEl.TvID} className="movieCard">
+        <Card.Img 
+          onClick={() => {
+            setShowPopup(true)
+            setSelection(arrayEl)
+          }} 
+          className="moviePoster" 
+          alt={`${arrayEl.TvTitle} poster`} 
+          src={arrayEl.TvPoster} 
+        />
+        <Card.Title 
+          onClick={() => {
+            setShowPopup(true)
+            setSelection(arrayEl)
+          }} 
+          className="movieTitle">{arrayEl.TvTitle}
+        </Card.Title>
       </Card>
     )
   }

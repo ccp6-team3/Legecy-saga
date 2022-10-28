@@ -11,6 +11,7 @@ const HPShows = (props) => {
       <Card.Img 
         onClick={() => {
           setShowPopup(true)
+          console.log(card);
           setSelection(card)
         }} 
         className="moviePoster" 

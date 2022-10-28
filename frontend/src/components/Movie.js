@@ -10,7 +10,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-const Movie = () => {
+const Movie = (props) => {
+  const { setMoviePopup, setSelection } = props;
+
   const [movieSort, setMovieSort] = useState([]);
   const [movieGenres, setMovieGenres] = useState([]);
   const [movieArray, setMovieArray] = useState([]);
@@ -114,8 +116,22 @@ const Movie = () => {
   const movieCards = (arrayEl) => {
     return (
       <Card key={arrayEl.movieID} className="movieCard">
-        <Card.Img className="moviePoster" alt={`${arrayEl.movieTitle} poster`} src={arrayEl.moviePoster} />
-        <Card.Title className="movieTitle">{arrayEl.movieTitle}</Card.Title>
+        <Card.Img 
+          onClick={() => {
+            setMoviePopup(true)
+            setSelection(arrayEl)
+          }} 
+          className="moviePoster" 
+          alt={`${arrayEl.movieTitle} poster`} 
+          src={arrayEl.moviePoster} 
+        />
+        <Card.Title 
+          onClick={() => {
+            setMoviePopup(true)
+            setSelection(arrayEl)
+          }} 
+          className="movieTitle">{arrayEl.movieTitle}
+        </Card.Title>
       </Card>
     )
   }
