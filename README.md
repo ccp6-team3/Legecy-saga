@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./sagaLarge.svg" />
+  <img src="./frontend/src/sagaLarge.svg" />
 </p>
 
 # <div align="center">A movie and TV show reviewing platform</div>
