@@ -19,7 +19,7 @@ const NavigationBar = (props) => {
   return (
     <>
       <div className="title-background">
-        <h1 onClick={() => setNavState("home")} className="title">saga</h1>
+        <h1 onClick={() => setNavState("home")} href="#home" className="title">saga</h1>
         <Button className="float-end" size="lg" variant="outline-danger" onClick={() => setAdultFilter(toggleFilter)}>Safe mode: {`${adultFilter}`}</Button>
       </div>
       <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
@@ -27,26 +27,26 @@ const NavigationBar = (props) => {
           <Nav.Link onClick={() => {
             setNavState("home")
           }}
-          eventKey="#home">Home</Nav.Link>
+          href="#home">Home</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link onClick={() => {
             setNavState("movie")
             }
           }
-          eventKey="#movie">Movies</Nav.Link>
+          href="#movie">Movies</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link onClick={() => {
             setNavState("shows")
             }
-          } eventKey="#shows">TV Shows</Nav.Link>
+          } href="#shows">TV Shows</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link onClick={() => {
             setNavState("upcoming")
             }
-          } eventKey="#upcoming">Upcoming</Nav.Link>
+          } href="#upcoming">Upcoming</Nav.Link>
         </Nav.Item>
       </Nav>
     </>

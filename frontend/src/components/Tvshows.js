@@ -58,6 +58,18 @@ const Tvshows = () => {
     })
   }
 
+  const filterByOther = (otherField) => {
+    fetch("/searchTV", {
+      headers: {
+        'sort_by': otherField
+      }
+    })
+    .then((data) => data.json())
+    .then((arr) => {  
+      setShowArray(arr.slice(0,4))
+    })
+  }
+
   const showCards = (arrayEl) => {
     return (
       <Card key={arrayEl.TvId} className="movieCard">
@@ -69,7 +81,7 @@ const Tvshows = () => {
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item href={`#${arr.name}`} onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
     )
   }
 
@@ -77,13 +89,13 @@ const Tvshows = () => {
 
   const mapShowRate = (i) => {
     return (
-      <NavDropdown.Item href={`#${i}`} onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
       )
   }
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item href={`#${arr}`}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => filterByOther(arr)}>{arr}</NavDropdown.Item>
     )
   }
 
@@ -108,7 +120,6 @@ const Tvshows = () => {
             <NavDropdown title="Rating" id="navbarScrollingDropdown">
               {showRateArr.map(mapShowRate)}
             </NavDropdown>
-
 
             <NavDropdown title="Other" id="navbarScrollingDropdown">
               {showSort.map(mapOtherArr)}
