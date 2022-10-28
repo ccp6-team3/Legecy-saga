@@ -1,4 +1,6 @@
-import "../styles/Tvshows.css";
+// import "../styles/Tvshows.css";
+import "../styles/Homepage.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
@@ -101,7 +103,7 @@ const Tvshows = () => {
 
   return(
   <>
-  <Navbar bg="light" expand="lg">
+  <Navbar bg="light" expand="md">
         <Container fluid>
         <div >
           <h1 id="filter-by">Filter By:</h1>

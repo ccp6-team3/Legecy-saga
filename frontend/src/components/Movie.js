@@ -101,7 +101,7 @@ const Movie = () => {
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)}>{arr.name}</NavDropdown.Item>
     )
   }
 
@@ -141,7 +141,7 @@ const Movie = () => {
 
   return(
   <>
-  <Navbar bg="light" expand="lg">
+  <Navbar bg="light" expand="md">
     <Container fluid>
         <div >
           <h1 id="filter-by">Filter By:</h1>
@@ -151,10 +151,10 @@ const Movie = () => {
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
+            style={{ maxHeight: '250px' }}
             navbarScroll
           >
-            <NavDropdown title="Genre" id="navbarScrollingDropdown">
+            <NavDropdown title="Genre" id="navbarScrollingDropdown" >
               {movieGenres.map(mapGenresArr)}
             </NavDropdown>
 
@@ -178,6 +178,9 @@ const Movie = () => {
             <NavDropdown title="Other2" id="navbarScrollingDropdown">
               {movieSort.map(mapOtherArr2)}
             </NavDropdown> */}
+          </Nav>
+          <Nav>
+            <Button className="d-grid gap-2" variant="outline-dark" /*onClick={() => setCompoundFilter({})}*/>Reset Filters</Button>
           </Nav>
           
         </Navbar.Collapse>

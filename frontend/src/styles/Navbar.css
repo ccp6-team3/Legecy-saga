@@ -40,3 +40,10 @@
   width: 20%;
   font-size: large;
 }
+
+/* for movie and tv show nav */
+.nav-item.dropdown{
+  text-align: left;
+  width: 40%;
+  font-size: large;
+}
