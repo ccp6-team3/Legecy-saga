@@ -19,9 +19,11 @@
 * Provides a safe mode switch which only shows movies that are not marked with adult content
 
 # Getting Started  
-<div align="center">‼️to begin using TMDB, you will need to make an account and get access to an api key. Please visit their website at the following url‼️</div> <div align="center">https://www.themoviedb.org/documentation/api</div>
-<br>
+### ‼️ Things you will need:
+* Install [postgresql](https://www.postgresql.org/)
+* Get api key from [TMDB](https://www.themoviedb.org/documentation/api)
 
+### Setup
 Begin by running the following command in the root folder to install depencies  
 ```js
 npm install
