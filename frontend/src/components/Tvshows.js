@@ -118,6 +118,10 @@ const Tvshows = (props) => {
 //       setShowArray(arr);
 //     })
 //   }
+  const resetShow = () => {
+    setCompoundFilter({});
+    setShowArray([]);
+  }
 
   const showCards = (arrayEl) => {
     return (
@@ -206,7 +210,9 @@ const Tvshows = (props) => {
               {showSort.map(mapOtherArr)}
             </NavDropdown>
           </Nav>
-          
+          <Nav>
+            <Button className="d-grid gap-2" variant="outline-dark" onClick={resetShow}>Reset Filters</Button>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

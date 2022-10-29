@@ -146,15 +146,20 @@ const Movie = (props) => {
 
     return (
       <Card key={arrayEl.movieID} className="movieCard">
-        <Card.Img 
-          onClick={() => {
-            setMoviePopup(true)
-            setSelection(arrayEl)
-          }} 
-          className="moviePoster" 
-          alt={`${arrayEl.movieTitle} poster`} 
-          src={arrayEl.moviePoster} 
-        />
+        {arrayEl.moviePoster !== "https://image.tmdb.org/t/p/originalnull" ? 
+          <Card.Img 
+            onClick={() => {
+              setMoviePopup(true)
+              setSelection(arrayEl)
+            }} 
+            className="moviePoster" 
+            alt={`${arrayEl.movieTitle} poster`} 
+            src={arrayEl.moviePoster} 
+          />
+          : <Card.Body className="moviePoster border d-flex align-items-center justify-content-center">
+            Coming Soon
+          </Card.Body>
+        } 
         <Card.Title 
           onClick={() => {
             setMoviePopup(true)
