@@ -17,29 +17,74 @@ app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 app.use(express.json());
 
+const filterMovies = (movieID) => {
+  let result
+  const forKids = fetch(`https://api.themoviedb.org/3/movie/${movieID}/release_dates?api_key=${API_KEY}`)
+  .then((result) => result.json())
+  .then((object) => {
+    object["results"].forEach((element) => {
+      if (element.iso_3166_1 === "US") {
+        element.release_dates.forEach((releaseDate) => {
+          if (releaseDate["certification"] === "PG" || releaseDate["certification"] === "PG-13" || releaseDate["certification"] === "G"){
+            result =  true
+          }
+        })        
+      }
+    })
+    return result
+  })
+  .then(res => {return res})
+  return forKids
+}
+
 //Get request for popular movies
-app.get("/popularMovies", (req, res) => {
-  const popularMoviesArray = [];
-  fetch(
+app.get("/popularMovies", async (req, res) => {
+  let popularMoviesArray = [];
+  const adultFilter = req.get("Filter")
+  const fetchedData = await fetch(
     `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
   )
     .then((result) => result.json())
-    .then((object) => {
-      object["results"].forEach((element) => {
-        if (element.adult === false) {
+    .then(async (data) => {
+      const movies = data.results
+      if(adultFilter === "false") {
+        movies.forEach((movie) => {
           let movieInfo = {};
-          movieInfo.movieID = element.id;
-          movieInfo.moviePoster = imagePath + element.poster_path;
-          movieInfo.movieTitle = element.title;
-          movieInfo.movieDescription = element.overview;
-          movieInfo.movieRating = element.vote_average;
-          movieInfo.releaseDate = element.release_date;
+          movieInfo.movieID = movie.id;
+          movieInfo.moviePoster = imagePath + movie.poster_path;
+          movieInfo.movieTitle = movie.title;
+          movieInfo.movieDescription = movie.overview;
+          movieInfo.movieRating = movie.vote_average;
+          movieInfo.releaseDate = movie.release_date;
           popularMoviesArray.push(movieInfo);
-        }
-      });
-      return popularMoviesArray;
+        })
+        return popularMoviesArray
+      }
+      else if (adultFilter === "true"){
+        const arrayOfPromises = []
+        movies.forEach((movie)=>{
+          arrayOfPromises.push(filterMovies(movie.id))
+        })
+
+        return await Promise.all(arrayOfPromises)
+        .then((arrayOfBooleans)=>{
+          arrayOfBooleans.forEach((boolean, i)=>{
+            if(boolean){
+              let movieInfo = {};
+              movieInfo.movieID = movies[i].id;
+              movieInfo.moviePoster = imagePath + movies[i].poster_path;
+              movieInfo.movieTitle = movies[i].title;
+              movieInfo.movieDescription = movies[i].overview;
+              movieInfo.movieRating = movies[i].vote_average;
+              movieInfo.releaseDate = movies[i].release_date;
+              popularMoviesArray.push(movieInfo);
+            }
+          })
+        }).then(()=> {return popularMoviesArray})
+      }
     })
-    .then((resultArray) => res.send(resultArray));
+    .then((resultArray) => {console.log(resultArray);res.send(resultArray)});
+    return fetchedData
 });
 
 //Get request for cast in a movie given the movie ID
@@ -103,7 +148,14 @@ app.get("/searchMovies", (req, res) => {
   const fromYear = req.get("fromYear") ? "&release_date.gte=" + req.get("fromYear") : "";
   const untilYear = req.get("untilYear") ? "&release_date.lte=" + req.get("untilYear") : "";
   const rating = req.get("rating") ? "&vote_average.gte=" + req.get("rating") : "";
-  const certification = req.get("certification") ? "&certification_country=US&certification.lte=" + req.get("certification") : "";
+  let certification
+  const adultFilter = req.get("Filter")
+  if(adultFilter === "true"){
+    certification = "&certification_country=US&certification.lte=PG-13"
+  }
+  else {
+    certification = req.get("certification") ? "&certification_country=US&certification.lte=" + req.get("certification") : "";
+  }
   const sort_by = req.get("sort_by") ? "&sort_by=" + req.get("sort_by") : "&sort_by=popularity.desc";
   const castOrCrew = req.get("castOrCrew") ? "&with_people=" + req.get("castOrCrew") : "";
   const searchResultArray = []
@@ -179,39 +231,55 @@ app.get("/topRatedMovies", (req,res) => {
 })
 
 //Get upcoming movies
-app.get("/upcomingMovies", (req,res) => {
+app.get("/upcomingMovies", async (req,res) => {
   const upcomingMoviesArray = []
   const location = req.get("location") ? "&region=" + req.get("location") : "";  
-  fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1${location}`)
-  .then((result) => result.json())
-  .then((object) => {
-    object["results"].forEach((element) => {
-      if (element.adult === false) {
-        let movieInfo = {};
-        movieInfo.movieID = element.id;
-        movieInfo.moviePoster = imagePath + element.poster_path;
-        movieInfo.movieTitle = element.title;
-        movieInfo.movieDescription = element.overview;
-        movieInfo.movieRating = element.vote_average;
-        movieInfo.releaseDate = element.release_date;
-        upcomingMoviesArray.push(movieInfo);
+  const adultFilter = req.get("Filter")
+  const fetchedData = await fetch(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=US`
+  )
+    .then((result) => result.json())
+    .then(async (data) => {
+      const movies = data.results
+      if(adultFilter === "false") {
+        movies.forEach((movie) => {
+          let movieInfo = {};
+          movieInfo.movieID = movie.id;
+          movieInfo.moviePoster = imagePath + movie.poster_path;
+          movieInfo.movieTitle = movie.title;
+          movieInfo.movieDescription = movie.overview;
+          movieInfo.movieRating = movie.vote_average;
+          movieInfo.releaseDate = movie.release_date;
+          upcomingMoviesArray.push(movieInfo);
+        })
+        return upcomingMoviesArray
       }
-    });
-    return upcomingMoviesArray;
-  })
-  .then((resultArray) => res.send(resultArray));
-})
+      else if (adultFilter === "true"){
+        const arrayOfPromises = []
+        movies.forEach((movie)=>{
+          arrayOfPromises.push(filterMovies(movie.id))
+        })
 
-app.get("/test", (req, res) => {
-  knex
-    .select()
-    .from("users")
-    .where("users.fist_name", "=", "Bryan")
-    .then((result) => {
-      return res.send(result);
+        return await Promise.all(arrayOfPromises)
+        .then((arrayOfBooleans)=>{
+          arrayOfBooleans.forEach((boolean, i)=>{
+            if(boolean){
+              let movieInfo = {};
+              movieInfo.movieID = movies[i].id;
+              movieInfo.moviePoster = imagePath + movies[i].poster_path;
+              movieInfo.movieTitle = movies[i].title;
+              movieInfo.movieDescription = movies[i].overview;
+              movieInfo.movieRating = movies[i].vote_average;
+              movieInfo.releaseDate = movies[i].release_date;
+              upcomingMoviesArray.push(movieInfo);
+            }
+          })
+        }).then(()=> {return upcomingMoviesArray})
+      }
     })
-    .catch((err) => console.log(err));
-});
+    .then((resultArray) => {console.log(resultArray);res.send(resultArray)});
+    return fetchedData
+})
 
 app.get("/popularTV", (req, res) => {
   let popularTV = [];

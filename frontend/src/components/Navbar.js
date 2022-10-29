@@ -1,12 +1,12 @@
 import Nav from 'react-bootstrap/Nav'
 import '../styles/Navbar.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 
 const NavigationBar = (props) => {
-  const { navState, setNavState } = props;
+  const { navState, setNavState, setSafe } = props;
   const [adultFilter, setAdultFilter] = useState("Off")
 
   const toggleFilter = () => {
@@ -16,6 +16,15 @@ const NavigationBar = (props) => {
       return "Off";
     }
   }
+
+  useEffect(() => {
+    if(adultFilter === "On"){
+      setSafe(true)
+    }
+    else{
+      setSafe(false)
+    }
+  },[adultFilter])
 
   return (
     <>

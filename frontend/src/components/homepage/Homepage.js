@@ -7,21 +7,24 @@ import HPShows from "./HPShows.js";
 import HPFooter from "./HPFooter";
 
 const HomePage = (props) => {
-  const { setMoviePopup, setShowPopup, setSelection } = props;
+  const { safe, setMoviePopup, setShowPopup, setSelection } = props;
 
   const [movieArray, setMovieArray] = useState([]);
   const [bannerArray, setBannerArray] = useState([]);
   const [showArray, setShowArray] = useState([]);
 
   useEffect(() => {
-    fetch("/popularMovies")
+    fetch("/popularMovies", {
+      headers: {
+      "Filter": safe
+      }})
       .then(res => res.json())
       .then(arr => {
         setMovieArray(arr.slice(5))
         setBannerArray(arr.slice(0, 5))
       })
-  },[])
-  // console.log(movieArray)
+  },[safe])
+
 
   useEffect(() => {
     fetch("/popularTV")

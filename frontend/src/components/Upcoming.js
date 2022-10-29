@@ -2,12 +2,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/Upcoming.css";
 import Card from "react-bootstrap/Card";
 import HPFooter from "./homepage/HPFooter";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
 
 const Upcoming = (props) => {
-  const { newMovieArray, setMoviePopup, setSelection } = props;
+  const { safe, newMovieArray, setMoviePopup, setSelection } = props;
 
+  const [movieArray, setMovieArray] = useState(newMovieArray)
+
+  useEffect(()=> {
+    setMovieArray(newMovieArray)
+  },[safe])
+  
   const renderCard = (card) => {
     return (
       <Card key={card.movieID} className="movieCard">
@@ -32,10 +37,12 @@ const Upcoming = (props) => {
     )
   };
 
+
+
   return (
     <div className="movieSection">
       <h1 className="page-title">Upcoming Movies</h1>
-      {newMovieArray.map(renderCard)}
+      {movieArray.length == 0 ? <h3>"Sorry, there are no movies with your current search options"</h3> : movieArray.map(renderCard)}
       <HPFooter />
     </div>
   )
