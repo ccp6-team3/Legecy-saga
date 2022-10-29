@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from "react-bootstrap/Card";
 
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -28,48 +27,24 @@ const Tvshows = (props) => {
   useEffect(() => {
     Promise.all([genreFetch,ratingFetch])
     .then((promises) => {
-      // returns two promises that need to be json() and passed on to next .then
-      // return promises[0].json() // makes arr into genre array
       return Promise.all(promises.map(dataArr => dataArr.json()))
   
     })
     .then((arr) => {   
-      // console.log(arr)   
       setShowGenres(arr[0]);
       setShowSort(arr[1]);
     })
 
   },[])
 
-  // useEffect(() => {
-  //   fetch("/tvGenres")
-  //   .then((data) => data.json())
-  //   .then((arr) => {      
-  //     setShowGenres(arr);
-  //   })
-  // },[])
-  
-  // // console.log(showGenres)
-
-  // useEffect(() => {
-  //   fetch("/tvSortBy")
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     setShowSort(arr);
-  //   })
-  // },[])
-
   const updateCompound = (input) => {
     setCompoundFilter({...compoundFilter, ...input});
   }
 
-  //{genre: 18, rating:6, sort_by:yay}
-
   useEffect(() => {
-    //{type: id/num}
     console.log(compoundFilter)
     if (Object.keys(compoundFilter).length !== 0) {
-      fetch("/searchMovies", {
+      fetch("/searchTV", {
         headers: compoundFilter
       })
       .then((data) => data.json())
@@ -80,44 +55,6 @@ const Tvshows = (props) => {
     }
   },[compoundFilter])
 
-//   const filterByGenre = (genre) => {
-//     fetch("/searchTV", {
-//       headers: {
-//         'genre': genre
-//       }
-//     })
-//     .then((data) => data.json())
-//     .then((arr) => {  
-//       // setShowArray(arr.slice(0,10))
-//       setShowArray(arr);    
-//     })
-//   }
-
-//   const filterByRating = (rating) => {
-//     fetch("/searchTV", {
-//       headers: {
-//         'rating': rating
-//       }
-//     })
-//     .then((data) => data.json())
-//     .then((arr) => {  
-//       // setShowArray(arr.slice(0,10))
-//       setShowArray(arr);    
-// })
-//   }
-
-//   const filterByOther = (otherField) => {
-//     fetch("/searchTV", {
-//       headers: {
-//         'sort_by': otherField
-//       }
-//     })
-//     .then((data) => data.json())
-//     .then((arr) => {  
-//       // setShowArray(arr.slice(0,10))
-//       setShowArray(arr);
-//     })
-//   }
   const resetShow = () => {
     setCompoundFilter({});
     setShowArray([]);
@@ -146,41 +83,23 @@ const Tvshows = (props) => {
     )
   }
 
-  // const mapGenresArr = (arr) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
-  //   )
-  // }
-
-  // const mapShowRate = (i) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
-  //     )
-  // }
-
-  // const mapOtherArr = (arr) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => filterByOther(arr)}>{arr}</NavDropdown.Item>
-  //   )
-  // }
-
   let showRateArr = [0,1,2,3,4,5,6,7,8,9];
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => updateCompound({"genre":arr.id})} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"genre":arr.id})} >{arr.name}</NavDropdown.Item>
     )
   }
 
   const mapShowRate = (i) => {
     return (
-      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => updateCompound({"rating":i})}>{i} and up</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"rating":i})}>{i} and up</NavDropdown.Item>
       )
   }
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => updateCompound({"sort_by":arr})}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr})}>{arr}</NavDropdown.Item>
     )
   }
 
@@ -220,7 +139,6 @@ const Tvshows = (props) => {
     <div className="movieSection">
       {showArray.length>0 ? showArray.map(showCards) : <div></div>}
     </div>
-
   </>
   )
 }

@@ -40,15 +40,9 @@
   text-align: center;
   width: 20%;
   font-size: large;
-  /* --bs-nav-tabs-link-active-bg: #986093; */
   --bs-nav-link-color: white;
   --bs-nav-link-hover-color: white;
 }
-/* .nav-tab {
-  --bs-nav-tabs-link-active-color: #0080ff;
-  --bs-nav-tabs-link-active-bg: #986093;
-  --bs-nav-tabs-link-active-border-color:
-} */
 
 /* for movie and tv show nav */
 .nav-item.dropdown{

@@ -37,8 +37,6 @@ const Upcoming = (props) => {
     )
   };
 
-
-
   return (
     <div className="movieSection">
       <h1 className="page-title">Upcoming Movies</h1>

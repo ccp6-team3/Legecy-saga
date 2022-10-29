@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 const knex = require("./knex");
 const port = process.env.PORT || 8080;
-//const jwt = require('jsonwebtoken');
 require("dotenv").config({ path: "./.env.local" });
 
 const API_KEY = process.env.API_KEY_TMDB;
@@ -83,7 +82,7 @@ app.get("/popularMovies", async (req, res) => {
         }).then(()=> {return popularMoviesArray})
       }
     })
-    .then((resultArray) => {console.log(resultArray);res.send(resultArray)});
+    .then((resultArray) => res.send(resultArray));
     return fetchedData
 });
 
@@ -277,7 +276,7 @@ app.get("/upcomingMovies", async (req,res) => {
         }).then(()=> {return upcomingMoviesArray})
       }
     })
-    .then((resultArray) => {console.log(resultArray);res.send(resultArray)});
+    .then((resultArray) => res.send(resultArray));
     return fetchedData
 })
 
