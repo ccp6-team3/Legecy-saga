@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from "react-bootstrap/Card";
 
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -45,7 +44,7 @@ const Tvshows = (props) => {
   useEffect(() => {
     console.log(compoundFilter)
     if (Object.keys(compoundFilter).length !== 0) {
-      fetch("/searchMovies", {
+      fetch("/searchTV", {
         headers: compoundFilter
       })
       .then((data) => data.json())
