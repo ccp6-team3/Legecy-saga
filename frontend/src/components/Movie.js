@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from "react-bootstrap/Card";
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -24,46 +23,23 @@ const Movie = (props) => {
   useEffect(() => {
     Promise.all([genreFetch,ratingFetch])
     .then((promises) => {
-      // returns two promises that need to be json() and passed on to next .then
-      // return promises[0].json() // makes arr into genre array?
       return Promise.all(promises.map(dataArr => dataArr.json()))
   
     })
     .then((arr) => {   
-      // console.log(arr)   
       setMovieGenres(arr[0]);
       setMovieSort(arr[1]);
     })
 
   },[])
 
-
-  // useEffect(() => {
-  //   fetch("/movieGenres")
-  //   .then((data) => data.json())
-  //   .then((arr) => {      
-  //     setMovieGenres(arr);
-  //   })
-  // },[])
-
-  // useEffect(() => {
-  //   fetch("/movieSortBy")
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     setMovieSort(arr);
-  //   })
-  // },[])
-
-
   // combined search function that compounds searches 
-
   const updateCompound = (input) => {
     setCompoundFilter({...compoundFilter, ...input});
   }
 
 
   useEffect(() => {
-    //{type: id/num}
     console.log(compoundFilter)
     if (Object.keys(compoundFilter).length !== 0) {
       fetch("/searchMovies", {
@@ -117,19 +93,19 @@ const Movie = (props) => {
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => updateCompound({"genre":arr.id , "Filter":safe})} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"genre":arr.id , "Filter":safe})} >{arr.name}</NavDropdown.Item>
     )
   }
 
   const mapMovieRate = (i) => {
     return (
-      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => updateCompound({"rating":i , "Filter":safe})}>{i} and up</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"rating":i , "Filter":safe})}>{i} and up</NavDropdown.Item>
       )
   }
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => updateCompound({"sort_by":arr , "Filter":safe})}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr , "Filter":safe})}>{arr}</NavDropdown.Item>
     )
   }
 
@@ -173,7 +149,6 @@ const Movie = (props) => {
     <div className="movieSection">
       {movieArray.length>0 ? movieArray.map(movieCards) : <div></div>}
     </div>
-
   </>
   )
 }
