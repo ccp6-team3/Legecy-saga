@@ -11,7 +11,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Movie = (props) => {
-  const { setMoviePopup, setSelection } = props;
+  const { safe, setMoviePopup, setSelection } = props;
 
   const [movieSort, setMovieSort] = useState([]);
   const [movieGenres, setMovieGenres] = useState([]);
@@ -61,7 +61,6 @@ const Movie = (props) => {
     setCompoundFilter({...compoundFilter, ...input});
   }
 
-  //{genre: 18, rating:6, sort_by:yay}
 
   useEffect(() => {
     //{type: id/num}
@@ -78,71 +77,13 @@ const Movie = (props) => {
     }
   },[compoundFilter])
 
-  // const filterByGenre = (genre) => {
-  //   fetch("/searchMovies", {
-  //     headers: {
-  //       'genre': genre
-  //     }
-  //   })
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     // setMovieArray(arr.slice(0,10))
-  //     setMovieArray(arr)
-  //   })
-  // }
-
-  // const filterByRating = (rating) => {
-  //   fetch("/searchMovies", {
-  //     headers: {
-  //       'rating': rating
-  //     }
-  //   })
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     // setMovieArray(arr.slice(0,10))
-  //     setMovieArray(arr)
-  //   })
-  // }
-
-  // const filterByOther = (otherField) => {
-  //   fetch("/searchMovies", {
-  //     headers: {
-  //       'sort_by': otherField
-  //     }
-  //   })
-  //   .then((data) => data.json())
-  //   .then((arr) => {  
-  //     // setMovieArray(arr.slice(0,10))
-  //     setMovieArray(arr)
-  //   })
-  // }
-
-  // async function fuckOff() {
-  //   const typesOfFuck = ["asshole","because","bucket","bye"];
-  //   const type = typesOfFuck[Math.floor(Math.random() * typesOfFuck.length)];
-  //   const from = "Saga Team ;)"
-
-  //   const result = await fetch(`https://foaas.com/${type}/${from}`,{
-  //     headers: {
-  //       'Accept': 'application/json'
-  //     }
-  //   })
-  //   const jsResult = await result.json();
-  //   return jsResult;
-  // }
   const resetShow = () => {
     setCompoundFilter({});
     setMovieArray([]);
   }
 
   const movieCards = (arrayEl) => {
-  //   let fuckOffMessage;
-    
-  //   fuckOff().then((data) => {
-  //     fuckOffMessage = data.message + data.subtitle;
-  //     console.log(fuckOffMessage)
-  //     return fuckOffMessage;
-  //   })
+
 
     return (
       <Card key={arrayEl.movieID} className="movieCard">
@@ -171,45 +112,24 @@ const Movie = (props) => {
     )
   }
 
-  
-
-  // const mapGenresArr = (arr) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)}>{arr.name}</NavDropdown.Item>
-  //   )
-  // }
-  
-  // const mapMovieRate = (i) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
-  //     )
-  // }
-
-  // const mapOtherArr = (arr) => {
-  //   return (
-  //     <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => filterByOther(arr)}>{arr}</NavDropdown.Item>
-  //   )
-  // }
-
-  // using useEffect and compound
   let movieRateArr = [0,1,2,3,4,5,6,7,8,9];
 
 
   const mapGenresArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => updateCompound({"genre":arr.id})} >{arr.name}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => updateCompound({"genre":arr.id , "Filter":safe})} >{arr.name}</NavDropdown.Item>
     )
   }
 
   const mapMovieRate = (i) => {
     return (
-      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => updateCompound({"rating":i})}>{i} and up</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => updateCompound({"rating":i , "Filter":safe})}>{i} and up</NavDropdown.Item>
       )
   }
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => updateCompound({"sort_by":arr})}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => updateCompound({"sort_by":arr , "Filter":safe})}>{arr}</NavDropdown.Item>
     )
   }
 

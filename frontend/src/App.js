@@ -19,12 +19,10 @@ import Button from 'react-bootstrap/Button';
 // import Col from 'react-bootstrap/Col';
 
 
-
-
 function App() {
   const [info, setInfo] = useState(null);
   const [navState, setNavState] = useState("home");
-  const [safe, setSafe] = useState(null);
+  const [safe, setSafe] = useState(false);
   const [newMovieArray, setNewMovieArray] = useState([]);
   const [moviePopup, setMoviePopup] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -36,6 +34,20 @@ function App() {
   // const [num, setNum] = useState(0);
 
 
+
+  useEffect(()=>{
+    if (navState === "home") {
+      setNavState(<HomePage safe={safe} setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
+    } else if (navState === "movie") {
+      setNavState(<Movie safe={safe} setSelection={setSelection} setMoviePopup={setMoviePopup} />)
+    } else if (navState === "shows") {
+      setNavState(<Shows setSelection={setSelection} setShowPopup={setShowPopup} />)
+    } else if (navState === "upcoming") {
+      setNavState(<Upcoming safe={safe} setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
+    }
+  },[safe, navState])
+
+
   useEffect(() => {
     fetch("/userCountry")
     .then(res => res.json())
@@ -45,37 +57,28 @@ function App() {
   useEffect(() => {
     fetch("/upcomingMovies",{
       headers: {
-      "location": location
+      "location": location,
+      "Filter": safe
       }})
       .then(res => res.json())
       .then(arr => setNewMovieArray(arr))
-  },[location])
+  },[location, safe])
 
-  const fetchInfo = () => {
-    return fetch('/test')
-    .then((data) => {
-      return data.json();
-    })
-    .then((dataJS) => {
-      setInfo(dataJS);
-    });
-  };
-
-  if (navState === "home") {
-    setNavState(<HomePage setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
-  } else if (navState === "movie") {
-    setNavState(<Movie setSelection={setSelection} setMoviePopup={setMoviePopup} />)
-  } else if (navState === "shows") {
-    setNavState(<Shows setSelection={setSelection} setShowPopup={setShowPopup} />)
-  } else if (navState === "upcoming") {
-    setNavState(<Upcoming setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
-  }
+  // if (navState === "home") {
+  //   setNavState(<HomePage safe={safe} setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
+  // } else if (navState === "movie") {
+  //   setNavState(<Movie setSelection={setSelection} setMoviePopup={setMoviePopup} />)
+  // } else if (navState === "shows") {
+  //   setNavState(<Shows setSelection={setSelection} setShowPopup={setShowPopup} />)
+  // } else if (navState === "upcoming") {
+  //   setNavState(<Upcoming safe={safe} setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
+  // }
   // console.log(navState)
 
 
   return (
     <>
-    <NavigationBar navState={navState} setNavState={setNavState}/>
+    <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe}/>
     {navState}
     {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/>}
     {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup}/>}
