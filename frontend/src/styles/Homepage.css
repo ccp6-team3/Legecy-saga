@@ -71,6 +71,18 @@ h2, h3, p {
   border: none;
   display: inline-block;
 }
+.moviePoster.card-body {
+  background-color: white;
+  height: 360px;
+  width: 240px;
+  text-align: center;
+  /* ali */
+  border-top-left-radius: var(--bs-card-inner-border-radius);
+  border-top-right-radius: var(--bs-card-inner-border-radius);
+  border-bottom-left-radius: var(--bs-card-inner-border-radius);
+  border-bottom-right-radius: var(--bs-card-inner-border-radius);
+ 
+}
 
 .footer-container {
   display: flex;

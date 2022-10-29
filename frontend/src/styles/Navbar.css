@@ -34,17 +34,27 @@
 .nav {
   padding-top: .5rem;
   padding-bottom: 0;
-  background-color: rgb(40, 50, 69);
+  background-image: linear-gradient(to left bottom, #4242b3, #7650b9, #9c61be, #bc75c5, #d88bcc);
 }
 .nav-item {
   text-align: center;
   width: 20%;
   font-size: large;
+  /* --bs-nav-tabs-link-active-bg: #986093; */
+  --bs-nav-link-color: white;
+  --bs-nav-link-hover-color: white;
 }
+/* .nav-tab {
+  --bs-nav-tabs-link-active-color: #0080ff;
+  --bs-nav-tabs-link-active-bg: #986093;
+  --bs-nav-tabs-link-active-border-color:
+} */
 
 /* for movie and tv show nav */
 .nav-item.dropdown{
   text-align: left;
   width: 40%;
   font-size: large;
+  --bs-nav-link-color: black;
+
 }

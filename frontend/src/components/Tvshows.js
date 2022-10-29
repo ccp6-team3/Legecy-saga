@@ -19,6 +19,8 @@ const Tvshows = (props) => {
   const [showSort, setShowSort] = useState([]);
   const [showGenres, setShowGenres] = useState([]);
   const [showArray, setShowArray] = useState([]);
+  const [compoundFilter, setCompoundFilter] = useState({});
+
 
   const genreFetch = fetch("/tvGenres");
   const ratingFetch = fetch("/tvSortBy");
@@ -57,43 +59,68 @@ const Tvshows = (props) => {
   //   })
   // },[])
 
-  const filterByGenre = (genre) => {
-    fetch("/searchTV", {
-      headers: {
-        'genre': genre
-      }
-    })
-    .then((data) => data.json())
-    .then((arr) => {  
-      // setShowArray(arr.slice(0,10))
-      setShowArray(arr);    
-    })
+  const updateCompound = (input) => {
+    setCompoundFilter({...compoundFilter, ...input});
   }
 
-  const filterByRating = (rating) => {
-    fetch("/searchTV", {
-      headers: {
-        'rating': rating
-      }
-    })
-    .then((data) => data.json())
-    .then((arr) => {  
-      // setShowArray(arr.slice(0,10))
-      setShowArray(arr);    
-})
-  }
+  //{genre: 18, rating:6, sort_by:yay}
 
-  const filterByOther = (otherField) => {
-    fetch("/searchTV", {
-      headers: {
-        'sort_by': otherField
-      }
-    })
-    .then((data) => data.json())
-    .then((arr) => {  
-      // setShowArray(arr.slice(0,10))
-      setShowArray(arr);
-    })
+  useEffect(() => {
+    //{type: id/num}
+    console.log(compoundFilter)
+    if (Object.keys(compoundFilter).length !== 0) {
+      fetch("/searchMovies", {
+        headers: compoundFilter
+      })
+      .then((data) => data.json())
+      .then((arr) => {  
+        console.log(arr)
+        setShowArray(arr);
+      })
+    }
+  },[compoundFilter])
+
+//   const filterByGenre = (genre) => {
+//     fetch("/searchTV", {
+//       headers: {
+//         'genre': genre
+//       }
+//     })
+//     .then((data) => data.json())
+//     .then((arr) => {  
+//       // setShowArray(arr.slice(0,10))
+//       setShowArray(arr);    
+//     })
+//   }
+
+//   const filterByRating = (rating) => {
+//     fetch("/searchTV", {
+//       headers: {
+//         'rating': rating
+//       }
+//     })
+//     .then((data) => data.json())
+//     .then((arr) => {  
+//       // setShowArray(arr.slice(0,10))
+//       setShowArray(arr);    
+// })
+//   }
+
+//   const filterByOther = (otherField) => {
+//     fetch("/searchTV", {
+//       headers: {
+//         'sort_by': otherField
+//       }
+//     })
+//     .then((data) => data.json())
+//     .then((arr) => {  
+//       // setShowArray(arr.slice(0,10))
+//       setShowArray(arr);
+//     })
+//   }
+  const resetShow = () => {
+    setCompoundFilter({});
+    setShowArray([]);
   }
 
   const showCards = (arrayEl) => {
@@ -119,23 +146,41 @@ const Tvshows = (props) => {
     )
   }
 
-  const mapGenresArr = (arr) => {
-    return (
-      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
-    )
-  }
+  // const mapGenresArr = (arr) => {
+  //   return (
+  //     <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => filterByGenre(arr.id)} >{arr.name}</NavDropdown.Item>
+  //   )
+  // }
+
+  // const mapShowRate = (i) => {
+  //   return (
+  //     <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
+  //     )
+  // }
+
+  // const mapOtherArr = (arr) => {
+  //   return (
+  //     <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => filterByOther(arr)}>{arr}</NavDropdown.Item>
+  //   )
+  // }
 
   let showRateArr = [0,1,2,3,4,5,6,7,8,9];
 
+  const mapGenresArr = (arr) => {
+    return (
+      <NavDropdown.Item /*href={`#${arr.name}`}*/ onClick = {() => updateCompound({"genre":arr.id})} >{arr.name}</NavDropdown.Item>
+    )
+  }
+
   const mapShowRate = (i) => {
     return (
-      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => filterByRating(i)}>{i} and up</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${i}`}*/ onClick = {() => updateCompound({"rating":i})}>{i} and up</NavDropdown.Item>
       )
   }
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => filterByOther(arr)}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item /*href={`#${arr}`}*/ onClick = {() => updateCompound({"sort_by":arr})}>{arr}</NavDropdown.Item>
     )
   }
 
@@ -165,7 +210,9 @@ const Tvshows = (props) => {
               {showSort.map(mapOtherArr)}
             </NavDropdown>
           </Nav>
-          
+          <Nav>
+            <Button className="d-grid gap-2" variant="outline-dark" onClick={resetShow}>Reset Filters</Button>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
