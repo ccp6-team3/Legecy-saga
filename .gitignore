@@ -1,6 +1,7 @@
 # local env files
 .env.local
 .env.*.local
+.env
 
 # nodule folder
 node_modules
