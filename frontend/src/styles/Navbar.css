@@ -11,6 +11,13 @@
   background-color: rgb(23, 23, 23);
 }
 
+.title-background-danger {
+  display: flex;
+  padding-top: 1rem;
+  height: 10rem;
+  background-color: rgb(123, 23, 23);
+}
+
 .float-end {
   position: absolute;
   right: 3rem;
@@ -27,8 +34,21 @@
   width: 30rem;
   margin-left: auto;
   margin-right: auto;
-  font-family:'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   background-color: rgb(23, 23, 23);
+}
+
+.title-danger {
+  color: rgb(255, 255, 255);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 100px;
+  cursor: pointer;
+  width: 30rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: rgb(123, 23, 23);
 }
 
 .nav {
@@ -36,6 +56,7 @@
   padding-bottom: 0;
   background-image: linear-gradient(to left bottom, #4242b3, #7650b9, #9c61be, #bc75c5, #d88bcc);
 }
+
 .nav-item {
   text-align: center;
   width: 20%;
@@ -45,10 +66,10 @@
 }
 
 /* for movie and tv show nav */
-.nav-item.dropdown{
+.nav-item.dropdown {
   text-align: left;
   width: 40%;
   font-size: large;
   --bs-nav-link-color: black;
-  --bs-nav-link-hover-color:black;
+  --bs-nav-link-hover-color: black;
 }
