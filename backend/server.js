@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const knex = require("./knex");
 const port = process.env.PORT || 8080;
-require("dotenv").config({ path: "./.env.local" });
+require("dotenv").config({ path: "../.env.local" });
 
 const API_KEY = process.env.API_KEY_TMDB;
 
@@ -472,3 +472,5 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+module.exports = app;
