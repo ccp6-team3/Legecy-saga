@@ -1,9 +1,9 @@
 import './App.css';
-import NavigationBar from './components/Navbar.js' 
-import HomePage from './components/homepage/Homepage.js' 
-import Movie from './components/Movie.js' 
-import Shows from './components/Tvshows.js' 
-import Upcoming from './components/Upcoming.js' 
+import NavigationBar from './components/Navbar.js'
+import HomePage from './components/homepage/Homepage.js'
+import Movie from './components/Movie.js'
+import Shows from './components/Tvshows.js'
+import Upcoming from './components/Upcoming.js'
 import MoviePopup from './components/popups/MoviePopup.js'
 import ShowPopup from './components/popups/ShowPopup.js'
 
@@ -20,8 +20,9 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [selection, setSelection] = useState([])
   const [location, setLocation] = useState("")
+  const [isDanger, setDanger] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     if (navState === "home") {
       setNavState(<HomePage safe={safe} setSelection={setSelection} setShowPopup={setShowPopup} setMoviePopup={setMoviePopup} />)
     } else if (navState === "movie") {
@@ -31,30 +32,31 @@ function App() {
     } else if (navState === "upcoming") {
       setNavState(<Upcoming safe={safe} setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray} />)
     }
-  },[safe, navState])
+  }, [safe, navState])
 
   useEffect(() => {
     fetch("/userCountry")
-    .then(res => res.json())
-    .then(result => setLocation(result.location))
+      .then(res => res.json())
+      .then(result => setLocation(result.location))
   }, []);
 
   useEffect(() => {
-    fetch("/upcomingMovies",{
+    fetch("/upcomingMovies", {
       headers: {
-      "location": location,
-      "Filter": safe
-      }})
+        "location": location,
+        "Filter": safe
+      }
+    })
       .then(res => res.json())
       .then(arr => setNewMovieArray(arr))
-  },[location, safe])
+  }, [location, safe])
 
   return (
     <>
-      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe}/>
+      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} />
       {navState}
-      {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup}/>}
-      {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup}/>}
+      {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup} />}
+      {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup} />}
     </>
   );
 }
