@@ -54,7 +54,7 @@ function App() {
 
   return (
     <>
-      <div className='sticky-top'><DangerToast /></div>
+      {!safe && <div className='sticky-top'><DangerToast /></div>}
       <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} safe={safe} />
       {navState}
       {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup} />}
