@@ -13,24 +13,29 @@ const HomePage = (props) => {
   const [bannerArray, setBannerArray] = useState([]);
   const [showArray, setShowArray] = useState([]);
 
-  useEffect(() => {
+  const getPopularMovies = async () => {
     fetch("/popularMovies", {
       headers: {
-      "Filter": safe
-      }})
+        "Filter": safe
+      }
+    })
       .then(res => res.json())
       .then(arr => {
         setMovieArray(arr.slice(5))
         setBannerArray(arr.slice(0, 5))
       })
-  },[safe])
+  }
+
+  useEffect(() => {
+    getPopularMovies()
+  }, [safe])
 
 
   useEffect(() => {
     fetch("/popularTV")
       .then(res => res.json())
       .then(arr => setShowArray(arr))
-  },[])
+  }, [])
 
   return (
     <>

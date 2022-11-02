@@ -6,6 +6,7 @@ import Shows from './components/Tvshows.js'
 import Upcoming from './components/Upcoming.js'
 import MoviePopup from './components/popups/MoviePopup.js'
 import ShowPopup from './components/popups/ShowPopup.js'
+import DangerToast from './components/DangerToast';
 
 import React, { useState, useEffect } from 'react';
 
@@ -20,7 +21,7 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [selection, setSelection] = useState([])
   const [location, setLocation] = useState("")
-  const [isDanger, setDanger] = useState(false)
+  const [isDanger, setDanger] = useState(null)
 
   useEffect(() => {
     if (navState === "home") {
@@ -53,7 +54,8 @@ function App() {
 
   return (
     <>
-      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} />
+      <div className='sticky-top'><DangerToast /></div>
+      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} safe={safe} />
       {navState}
       {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup} />}
       {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup} />}
