@@ -1,3 +1,4 @@
+
 import "./App.css";
 import NavigationBar from "./components/Navbar.js";
 import HomePage from "./components/homepage/Homepage.js";
@@ -7,6 +8,7 @@ import Upcoming from "./components/Upcoming.js";
 import MoviePopup from "./components/popups/MoviePopup.js";
 import ShowPopup from "./components/popups/ShowPopup.js";
 import Search from "./components/Search";
+
 
 import React, { useState, useEffect } from "react";
 
@@ -20,8 +22,10 @@ function App() {
 	const [showPopup, setShowPopup] = useState(false);
 	const [selection, setSelection] = useState([]);
 	const [location, setLocation] = useState("");
+
 	const [search, setSearch] = useState([""]);
 	// const [searchResultArray, setSearchResultArray] = useState([]);
+	const [isDanger, setDanger] = useState(false)
 	useEffect(() => {
 		if (navState === "home") {
 			setNavState(
@@ -82,24 +86,16 @@ function App() {
 			.then((res) => res.json())
 			.then((arr) => setNewMovieArray(arr));
 	}, [location, safe]);
-
-	return (
-		<>
-			<NavigationBar
-				navState={navState}
-				setNavState={setNavState}
-				setSafe={setSafe}
-				setSearch={setSearch}
-			/>
-			{navState}
-			{moviePopup === true && (
-				<MoviePopup selection={selection} setMoviePopup={setMoviePopup} />
-			)}
-			{showPopup === true && (
-				<ShowPopup selection={selection} setShowPopup={setShowPopup} />
-			)}
-		</>
-	);
+	
+  return (
+    <>
+			<Search></Search>
+      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} />
+      {navState}
+      {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup} />}
+      {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup} />}
+    </>
+  );
 }
 
 export default App;
