@@ -7,12 +7,13 @@ const { unsubscribe } = require("../../server");
 exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex("movie_reviews").del();
-  // await knex('movie_reviews').insert([
-  //   {movie_id: 436270, review: "Good movie"},
-  //   {movie_id: 436270, review: "Bad movie"},
-  //   {movie_id: 436270, review: "OK movie"}
-  // ]);
+  await knex("users").del();
 
+  await knex("movie_reviews").insert([
+    { movie_id: 436270, review: "Good movie" },
+    { movie_id: 436270, review: "Bad movie" },
+    { movie_id: 436270, review: "OK movie" },
+  ]);
   await knex("users").insert([
     {
       username: "testUser",

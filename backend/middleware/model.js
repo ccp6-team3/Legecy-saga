@@ -32,13 +32,22 @@ module.exports = {
   getUserByEmail(userEmail) {
     return knex
       .select({
-        id: "id",
-        userNameDB: "username",
-        userEmailDB: "email",
-        userPasswordDB: "password",
+        userId: "id",
+        userName: "username",
+        userEmail: "email",
+        userPassword: "password",
       })
       .from("users")
       .where({ email: userEmail });
   },
+
+  sendUserData(data) {
+    knex("users")
+      .insert({
+        userName: data.userName,
+        userEmail: data.userEmail,
+        userPassword: data.userPassword,
+      })
+  }
 };
 
