@@ -13,14 +13,15 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-	const [navState, setNavState] = useState("search");
+	const [navState, setNavState] = useState("home");
 	const [safe, setSafe] = useState(false);
 	const [newMovieArray, setNewMovieArray] = useState([]);
 	const [moviePopup, setMoviePopup] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
 	const [selection, setSelection] = useState([]);
 	const [location, setLocation] = useState("");
-
+	const [search, setSearch] = useState([""]);
+	// const [searchResultArray, setSearchResultArray] = useState([]);
 	useEffect(() => {
 		if (navState === "home") {
 			setNavState(
@@ -59,6 +60,7 @@ function App() {
 					setSelection={setSelection}
 					setMoviePopup={setMoviePopup}
 					newMovieArray={newMovieArray}
+					search={search}
 				/>
 			);
 		}
@@ -87,6 +89,7 @@ function App() {
 				navState={navState}
 				setNavState={setNavState}
 				setSafe={setSafe}
+				setSearch={setSearch}
 			/>
 			{navState}
 			{moviePopup === true && (
