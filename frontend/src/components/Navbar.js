@@ -1,11 +1,13 @@
-import Nav from 'react-bootstrap/Nav'
-import '../styles/Navbar.css';
+import Nav from "react-bootstrap/Nav";
+import "../styles/Navbar.css";
 import { useEffect, useState } from "react";
 import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const NavigationBar = (props) => {
+
   const { navState, setNavState, setSafe, isDanger, setDanger } = props;
   const [adultFilter, setAdultFilter] = useState("Off")
 
@@ -65,4 +67,4 @@ const NavigationBar = (props) => {
   );
 }
 
-export default NavigationBar
+export default NavigationBar;

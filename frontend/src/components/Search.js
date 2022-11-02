@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 
 const Search = (props) => {
+	// const { search } = props;
 	const [search, setSearch] = useState([""]);
 	const [searchResultArray, setSearchResultArray] = useState([]);
 
 	useEffect(() => {
+		console.log(search);
 		fetch(`/search/${search}`)
 			.then((res) => res.json())
 			.then((data) => {
@@ -41,6 +43,7 @@ const Search = (props) => {
 
 	return (
 		<>
+			{console.log(search)}
 			<p>This is from the Search</p>
 			<input
 				onChange={(e) => {
