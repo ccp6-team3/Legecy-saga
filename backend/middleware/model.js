@@ -1,4 +1,4 @@
-const knex = require("./knex");
+const knex = require("../knex");
 
 module.exports = {
   getReviewsForMovie(movieId) {
@@ -38,16 +38,15 @@ module.exports = {
         userPassword: "password",
       })
       .from("users")
-      .where({ email: userEmail });
+      .where("email", "=", userEmail);
   },
 
   sendUserData(data) {
-    knex("users")
-      .insert({
-        userName: data.userName,
-        userEmail: data.userEmail,
-        userPassword: data.userPassword,
-      })
-  }
+    const {userName, userEmail, userPassword} = data;
+    return knex("users").insert({
+      username: userName,
+      email: userEmail,
+      password: userPassword,
+    });
+  },
 };
-

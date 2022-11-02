@@ -4,14 +4,12 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { getUserByEmail } = require("../middleware/model");
 
-router.use(express.json());
-
 router.post("/login", async (req, res) => {
   const userEmail = req.body.userEmail;
   const userPassword = req.body.userPassword;
-  
+
   await getUserByEmail(userEmail).then((data) => {
-    if (data.userEmail === userEmail && data.userPassword === userPassword) {
+    if (data[0].userEmail === userEmail && data[0].userPassword === userPassword) {
       const payload = {
         userEmail: userEmail,
       };
@@ -22,12 +20,12 @@ router.post("/login", async (req, res) => {
       };
       const token = jwt.sign(payload, secret, options);
 
-      res.json({
+      res.send({
         isSuccess: true,
         token: token,
       });
     } else {
-      res.json({
+      res.send({
         isSuccess: false,
         message: "wrong email adress or password",
       });

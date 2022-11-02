@@ -1,7 +1,7 @@
 const express = require("express");
 const { getUserByEmail } = require("../middleware/model");
 const router = express.Router();
-const authToken = require("../middleware/verifyToken");
+const authToken = require("../middleware/authToken");
 
 router.use(express.json());
 

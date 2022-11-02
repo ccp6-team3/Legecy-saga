@@ -14,20 +14,19 @@ const {
   getReviewsForMovie,
   getReviewsForTVShow,
   addReviewForMovies,
-  addReviewForMovies,
   addReviewForTVShows,
 } = require("./middleware/model");
 
+app.use(express.json());
+
 //routing for jwt
-const login = 
 app.use("/auth", require("./jwt/jwt.login"));
 app.use("/auth", require("./jwt/jwt.users"));
+app.use("/auth", require("./jwt/jwt.signup"));
 
 // have node serve the files for our built React app
 const path = require("path");
 app.use(express.static(path.resolve(__dirname, "../frontend/build")));
-
-app.use(express.json());
 
 const filterMovies = (movieID) => {
   let result;
