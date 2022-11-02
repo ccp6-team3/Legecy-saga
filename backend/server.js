@@ -540,26 +540,52 @@ app.get("/userCountry", (req, res) => {
 });
 
 //Prototype for search bar
-app.get("/search", (req, res) => {
+app.get("/search/:searchName", async (req, res) => {
 	let searchMoviesArray = [];
+	console.log(req.params.searchName);
 	let SEARCH_KEY = "jujutsu";
 	fetch(
-		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${SEARCH_KEY}`
+		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${req.params.searchName}`
 	)
 		.then((result) => result.json())
 		.then(async (data) => {
 			const movies = data.results;
 			movies.forEach((movie) => {
 				let movieInfo = {};
-				// movieInfo.movieID = movie.id;
-				// movieInfo.moviePoster = imagePath + movie.poster_path;
+				movieInfo.movieID = movie.id;
+				movieInfo.moviePoster = imagePath + movie.poster_path;
 				movieInfo.movieTitle = movie.title;
-				// movieInfo.movieDescription = movie.overview;
-				// movieInfo.movieRating = movie.vote_average;
-				// movieInfo.releaseDate = movie.release_date;
+				movieInfo.movieDescription = movie.overview;
+				movieInfo.movieRating = movie.vote_average;
+				movieInfo.releaseDate = movie.release_date;
 				searchMoviesArray.push(movieInfo);
 			});
-			console.log(searchMoviesArray);
+			return searchMoviesArray;
+		})
+		.then((resultArray) => res.send(resultArray));
+	// return searchMoviesArray;
+});
+
+//Prototype for search bar
+app.get("/search2", (req, res) => {
+	let searchTVArray = [];
+	let SEARCH_KEY = "jujutsu";
+	fetch(
+		`https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${SEARCH_KEY}`
+	)
+		.then((result) => result.json())
+		.then(async (data) => {
+			const TvInfo = data.results;
+			TvInfo.forEach((element) => {
+				let TvInfo = {};
+				TvInfo.TvID = element.id;
+				TvInfo.TvPoster = imagePath + element.poster_path;
+				TvInfo.TvTitle = element.name;
+				TvInfo.TvDescription = element.overview;
+				TvInfo.TvRating = element.vote_average;
+				searchTVArray.push(TvInfo);
+			});
+			console.log(searchTVArray);
 		});
 });
 
