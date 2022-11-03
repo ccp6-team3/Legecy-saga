@@ -59,6 +59,7 @@ function App() {
     }
   }, [safe, navState]);
 
+
   useEffect(() => {
     fetch("/userCountry")
       .then((res) => res.json())
@@ -76,6 +77,17 @@ function App() {
       .then((arr) => setNewMovieArray(arr));
   }, [location, safe]);
 
+
+	useEffect(() => {
+		fetch("/upcomingMovies", {
+			headers: {
+				location: location,
+				Filter: safe,
+			},
+		})
+			.then((res) => res.json())
+			.then((arr) => setNewMovieArray(arr));
+	}, [location, safe]);
 
   return (
     <>

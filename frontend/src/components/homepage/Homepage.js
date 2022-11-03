@@ -23,7 +23,7 @@ const HomePage = (props) => {
 			.then((arr) => {
 				setMovieArray(arr.slice(5));
 				setBannerArray(arr.slice(0, 5));
-				console.log(arr);
+				// console.log(arr);
 			});
 	}, [safe]);
 
