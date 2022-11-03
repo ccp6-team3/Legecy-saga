@@ -16,7 +16,7 @@ const Movie = (props) => {
   const [movieGenres, setMovieGenres] = useState([]);
   const [movieArray, setMovieArray] = useState([]);
   const [compoundFilter, setCompoundFilter] = useState({});
-  
+
   const genreFetch = fetch("/movieGenres");
   const ratingFetch = fetch("/movieSortBy");
 
@@ -58,6 +58,18 @@ const Movie = (props) => {
     setMovieArray([]);
   }
 
+  const nameOverwrite = (imput) => {
+    let y = ''
+    for (let x=0; x < imput.length; x++) {
+      if (imput[x] === '_' || imput[x] === ".") {
+      y = y + " "
+      } else {
+       y = y + imput[x]
+      }
+    }
+      return y
+  }
+
   const movieCards = (arrayEl) => {
 
 
@@ -91,6 +103,7 @@ const Movie = (props) => {
   let movieRateArr = [0,1,2,3,4,5,6,7,8,9];
 
 
+
   const mapGenresArr = (arr) => {
     return (
       <NavDropdown.Item onClick = {() => updateCompound({"genre":arr.id , "Filter":safe})} >{arr.name}</NavDropdown.Item>
@@ -105,7 +118,7 @@ const Movie = (props) => {
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr , "Filter":safe})}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr , "Filter":safe})}>{nameOverwrite(arr)}</NavDropdown.Item>
     )
   }
 
