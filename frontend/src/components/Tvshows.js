@@ -85,6 +85,18 @@ const Tvshows = (props) => {
 
   let showRateArr = [0,1,2,3,4,5,6,7,8,9];
 
+  const nameOverwrite = (imput) => {
+    let y = ''
+    for (let x=0; x < imput.length; x++) {
+      if (imput[x] === '_' || imput[x] === ".") {
+      y = y + " "
+      } else {
+       y = y + imput[x]
+      }
+    }
+      return y
+  }
+
   const mapGenresArr = (arr) => {
     return (
       <NavDropdown.Item onClick = {() => updateCompound({"genre":arr.id})} >{arr.name}</NavDropdown.Item>
@@ -99,7 +111,7 @@ const Tvshows = (props) => {
 
   const mapOtherArr = (arr) => {
     return (
-      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr})}>{arr}</NavDropdown.Item>
+      <NavDropdown.Item onClick = {() => updateCompound({"sort_by":arr})}>{nameOverwrite(arr)}</NavDropdown.Item>
     )
   }
 
