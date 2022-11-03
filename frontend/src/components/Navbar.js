@@ -1,6 +1,7 @@
-import Nav from "react-bootstrap/Nav";
-import "../styles/Navbar.css";
-import { useEffect, useState } from "react";
+
+import Nav from 'react-bootstrap/Nav'
+import '../styles/Navbar.css';
+import { useEffect, useState, useRef } from "react";
 import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
@@ -8,9 +9,10 @@ import Form from "react-bootstrap/Form";
 
 const NavigationBar = (props) => {
 
-  const { navState, setNavState, setSafe, isDanger, setDanger } = props;
-  const [adultFilter, setAdultFilter] = useState("Off")
+  const { navState, setNavState, setSafe, isDanger, setDanger, safe } = props;
 
+  const [adultFilter, setAdultFilter] = useState("Off")
+  const homeRef = useRef(null)
 
   const toggleFilter = () => {
     if (adultFilter === "Off") {
@@ -33,11 +35,23 @@ const NavigationBar = (props) => {
     <>
 
       <div className={isDanger ? "title-background" : "title-background-danger"}>
-        <img className={isDanger ? "title" : "title-danger"} alt="saga logo" src={logo} onClick={() => setNavState("home")} />
-        <Button className="float-end" size="lg" variant={isDanger ? "outline-danger" : "warning"} onClick={() => { setAdultFilter(toggleFilter); setDanger(!isDanger) }} >Safe mode: {`${adultFilter}`}</Button>
+        <img className={isDanger ? "title" : "title-danger"} alt="saga logo" src={logo} onClick={() => setNavState("home")} ref={homeRef} />
+
+
+
+        <Button className="float-end" size="lg" variant={isDanger ? "outline-danger" : "warning"}
+          onClick={() => {
+            homeRef.current.click()
+            setSafe(!safe)
+            setAdultFilter(toggleFilter);
+            setDanger(!isDanger);
+          }
+          } >Safe mode: {`${adultFilter}`}</Button>
+
+
       </div>
       <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
-        <Nav.Item className="nav-item">
+        <Nav.Item className="nav-item" >
           <Nav.Link onClick={() => {
             setNavState("home")
           }}
