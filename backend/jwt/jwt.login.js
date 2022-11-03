@@ -1,35 +1,49 @@
 require("dotenv").config({ path: "../../.env.local" });
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
+
 const jwt = require("jsonwebtoken");
-const { getUserByEmail } = require("../middleware/model");
+const { getAllUsers, getUserByEmail } = require("../middleware/model");
+
+let refreshTokens = [];
 
 router.post("/login", async (req, res) => {
-  const userEmail = req.body.userEmail;
-  const userPassword = req.body.userPassword;
+  const { userEmail, userPassword } = req.body;
+  let allUsers = [];
 
-  await getUserByEmail(userEmail).then((data) => {
-    if (data[0].userEmail === userEmail && data[0].userPassword === userPassword) {
-      const payload = {
-        userEmail: userEmail,
-      };
-      const secret = process.env.SECRET_KEY;
-      const options = {
-        algorithm: "HS256",
-        expiresIn: "20m",
-      };
-      const token = jwt.sign(payload, secret, options);
+  await getAllUsers().then((data) => {
+    return (allUsers = data);
+  });
 
-      res.send({
-        isSuccess: true,
-        token: token,
-      });
-    } else {
-      res.send({
-        isSuccess: false,
-        message: "wrong email adress or password",
-      });
-    }
+  let user = allUsers.find((user) => {
+    return user.userEmail === userEmail;
+  });
+
+  let isMatch 
+    = await bcrypt.compare(userPassword, user.userPassword);
+  // if (userPassword === user.userPassword) isMatch = true;
+
+
+  if (!isMatch) {
+    return res.send("Email or password is invalid");
+  }
+
+  const accessToken = await jwt.sign({ userEmail }, process.env.SECRET_KEY, {
+    algorithm: "HS256",
+    expiresIn: "1m",
+  });
+
+  const refreshToken = await jwt.sign({ userEmail }, process.env.SECRET_KEY, {
+    algorithm: "HS256",
+    expiresIn: "5m",
+  });
+
+  refreshTokens.push(refreshToken);
+
+  res.send({
+    accessToken,
+    refreshToken,
   });
 });
 

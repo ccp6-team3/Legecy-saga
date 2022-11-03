@@ -1,19 +1,20 @@
+require("dotenv").config({ path: "../../.env.local" });
 const jwt = require("jsonwebtoken");
 
-const authToken = (req, res, next) => {
-  const token = req.header("auth-token");
+const authToken = async (req, res, next) => {
+  const token = req.body.accessToken;
 
   if (token) {
     const secret = process.env.SECRET_KEY;
 
-    jwt.verify(token, secret, (err, decoded) => {
+    await jwt.verify(token, secret, (err, decoded) => {
       if (err) {
         return res.status(403).send({
           isSuccess: false,
           message: "Invalid token",
         });
       } else {
-        req.decoded = decoded;
+        req.userEmail = decoded.userEmail;
         next();
       }
     });

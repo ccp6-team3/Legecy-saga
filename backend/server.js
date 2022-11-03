@@ -21,7 +21,7 @@ app.use(express.json());
 
 //routing for jwt
 app.use("/auth", require("./jwt/jwt.login"));
-app.use("/auth", require("./jwt/jwt.users"));
+app.use("/auth", require("./jwt/jwt.user"));
 app.use("/auth", require("./jwt/jwt.signup"));
 
 // have node serve the files for our built React app
