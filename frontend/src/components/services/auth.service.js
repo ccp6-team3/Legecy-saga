@@ -2,20 +2,24 @@ import axios from "axios";
 
 const API_URL = "/auth";
 
-const signup = (username, email, password) => {
-  return axios
+//send Email and password to backend
+const signup = async (username, email, password) => {
+  return await axios
     .post(API_URL + "/signup", {
       userName: username,
       userEmail: email,
       userPassword: password,
     })
-    .then(res => {
-      
-    })
+    .then((res) => {
+      if (res.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(res.data));
+      }
+    });
 };
 
-const login = (email, password) => {
-  return axios
+//get token from server
+const login = async (email, password) => {
+  return await axios
     .post(API_URL + "/login", {
       userEmail: email,
       userPassword: password,
@@ -25,6 +29,16 @@ const login = (email, password) => {
         localStorage.setItem("user", JSON.stringify(res.data));
       }
 
+      return res.data;
+    });
+};
+
+const getUserData = async (token) => {
+  return await axios
+    .post(API_URL + "/user", {
+      accessToken: token,
+    })
+    .then((res) => {
       return res.data;
     });
 };
@@ -41,6 +55,7 @@ const authService = {
   signup,
   login,
   logout,
+  getUserData,
   getCurrentUser,
 };
 

@@ -7,18 +7,34 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const Login = (props) => {
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+
+const Register = (props) => {
   const { setLoginView } = props;
 
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [errPwd, setErrPwd] = useState("");
 
   return (
     <>
-      <Container className="login">
-        <h1>Log in</h1>
+      <Container className="registration">
+        <h1>Registration</h1>
         <Form>
+        <Form.Group className="mb-3">
+            <Form.Label>User Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your email address"
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -40,34 +56,51 @@ const Login = (props) => {
               placeholder="Password"
               onChange={(e) => {
                 setPassword(e.target.value);
+                console.log(password)
               }}
             />
           </Form.Group>
 
+          {/* <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Repeat Your Password</Form.Label>
+            <Form.Control type="password" placeholder="Repeat your password" 
+              onChange={(e) => {
+                if(!e.target.value === password){
+                  setErrPwd("passwords are wrong")
+                } else {
+                  setErrPwd("passwords confirmed")
+                }
+              }}/>
+              <Form.Control.Feedback type="invalid">
+              {errPwd}
+              </Form.Control.Feedback>
+          </Form.Group> */}
+
           <Button
             variant="primary"
             type="submit"
-            onClick={async () => {
-              await authService.login(email, password);
+            onClick={() => {
+              console.log(email, password)
+              authService.signup(userName, email, password);
               if (err === "") {
-                await setLoginView("profile");
+                setLoginView("login");
               }
             }}
           >
-            Log in
+            Sign up
           </Button>
-
           <br />
-          <div id="signup-dev">
-            <Form.Label>Need an Account?</Form.Label>
+
+          <div className="login-dev">
+            <Form.Label>Do you have any accoust?</Form.Label>
             <Button
               id="signup"
               variant="link"
               onClick={() => {
-                setLoginView("registration");
+                setLoginView("login");
               }}
             >
-              Sign up
+              Log in
             </Button>
           </div>
         </Form>
@@ -76,4 +109,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Register;

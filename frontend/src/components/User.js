@@ -1,29 +1,31 @@
-import "../styles/Homepage.css";
+import "../styles/User.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Profiler } from "react";
 
 import Login from "./user/Login";
-import Regist from "./user/Regist";
+import Register from "./user/Register";
+import Profile from "./user/Profile";
 
 const User = (props) => {
-  const { safe, newMovieArray, setMoviePopup, setSelection } = props;
+  const {} = props;
 
-  const [user, setUser] = useState("");
-  const [currentView, setCurrentView] = useState("login");
+  const [loginView, setLoginView] = useState("login");
 
   return (
     <>
       <div className="user-dev">
-        {currentView === "login" && (
+        {loginView === "login" && (
           <Login
-            user={user}
-            setUser={setUser}
-            setCurrentView={setCurrentView}
+            setLoginView={setLoginView}
           />
         )}
 
-        {currentView === "registration" && (
-          <Regist setCurrentView={setCurrentView} />
+        {loginView === "registration" && (
+          <Register setLoginView={setLoginView} />
+        )}
+
+        {loginView === "profile" && (
+          <Profile setLoginView={setLoginView}/>
         )}
       </div>
     </>
