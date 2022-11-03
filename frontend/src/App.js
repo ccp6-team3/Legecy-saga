@@ -1,12 +1,12 @@
-
-import "./App.css";
-import NavigationBar from "./components/Navbar.js";
-import HomePage from "./components/homepage/Homepage.js";
-import Movie from "./components/Movie.js";
-import Shows from "./components/Tvshows.js";
-import Upcoming from "./components/Upcoming.js";
-import MoviePopup from "./components/popups/MoviePopup.js";
-import ShowPopup from "./components/popups/ShowPopup.js";
+import './App.css';
+import NavigationBar from './components/Navbar.js'
+import HomePage from './components/homepage/Homepage.js'
+import Movie from './components/Movie.js'
+import Shows from './components/Tvshows.js'
+import User from './components/User.js'
+import Upcoming from './components/Upcoming.js'
+import MoviePopup from './components/popups/MoviePopup.js'
+import ShowPopup from './components/popups/ShowPopup.js'
 import Search from "./components/Search";
 import DangerToast from "./components/DangerToast";
 
@@ -69,6 +69,8 @@ function App() {
           search={search}
         />
       );
+    } else if (navState === "user") {
+      setNavState(<User safe={safe} setSelection={setSelection} setMoviePopup={setMoviePopup} newMovieArray={newMovieArray}/>)
     }
   }, [safe, navState]);
 

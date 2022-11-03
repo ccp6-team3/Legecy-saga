@@ -17,65 +17,97 @@ const NavigationBar = (props) => {
     } else {
       return "Off";
     }
-  }
+  };
 
   useEffect(() => {
     if (adultFilter === "On") {
-      setSafe(true)
+      setSafe(true);
+    } else {
+      setSafe(false);
     }
-    else {
-      setSafe(false)
-    }
-  }, [adultFilter])
+  }, [adultFilter]);
 
   return (
     <>
-
-      <div className={isDanger ? "title-background" : "title-background-danger"}>
-        <img className={isDanger ? "title" : "title-danger"} alt="saga logo" src={logo} onClick={() => setNavState("home")} ref={homeRef} />
-
-
-
-        <Button className="float-end" size="lg" variant={isDanger ? "outline-success" : "warning"}
+      <div
+        className={isDanger ? "title-background" : "title-background-danger"}
+      >
+        <img
+          className={isDanger ? "title" : "title-danger"}
+          alt="saga logo"
+          src={logo}
+          onClick={() => setNavState("home")}
+        />
+        <Button
+          className="float-end"
+          size="lg"
+          variant={isDanger ? "outline-danger" : "warning"}
           onClick={() => {
-            homeRef.current.click()
-            setSafe(!safe)
             setAdultFilter(toggleFilter);
             setDanger(!isDanger);
-          }
-          } >Safe mode: {`${adultFilter}`}</Button>
-
-
-      </div>
-      <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
-        <Nav.Item className="nav-item" >
-          <Nav.Link onClick={() => {
-            setNavState("home")
           }}
-            href="#home">Home</Nav.Link>
+        >
+          Safe mode: {`${adultFilter}`}
+        </Button>
+      </div>
+      <Nav
+        variant="tabs"
+        className="nav justify-content-center"
+        defaultActiveKey="#home"
+      >
+        <Nav.Item className="nav-item" >
+          <Nav.Link
+            onClick={() => {
+              setNavState("home");
+            }}
+            href="#home"
+          >
+            Home
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("movie")
-          }
-          }
-            href="#movie">Movies</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("movie");
+            }}
+            href="#movie"
+          >
+            Movies
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("shows")
-          }
-          } href="#shows">TV Shows</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("shows");
+            }}
+            href="#shows"
+          >
+            TV Shows
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("upcoming")
-          }
-          } href="#upcoming">Upcoming</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("upcoming");
+            }}
+            href="#upcoming"
+          >
+            Upcoming
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            onClick={() => {
+              setNavState("user");
+            }}
+            href="#user"
+          >
+            User
+          </Nav.Link>
         </Nav.Item>
       </Nav>
     </>
   );
-}
+};
 
-export default NavigationBar;
+export default NavigationBar
