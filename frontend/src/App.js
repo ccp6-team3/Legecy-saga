@@ -23,8 +23,11 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [selection, setSelection] = useState([]);
   const [location, setLocation] = useState("");
-  const [isDanger, setDanger] = useState(null)
+  const [isToastVisible, setToastVisible] = useState(false)
 
+  const [search, setSearch] = useState([""]);
+  // const [searchResultArray, setSearchResultArray] = useState([]);
+  const [isDanger, setDanger] = useState(false)
   useEffect(() => {
     if (navState === "home") {
       setNavState(
@@ -56,6 +59,16 @@ function App() {
           newMovieArray={newMovieArray}
         />
       );
+    } else if (navState === "search") {
+      setNavState(
+        <Search
+          safe={safe}
+          setSelection={setSelection}
+          setMoviePopup={setMoviePopup}
+          newMovieArray={newMovieArray}
+          search={search}
+        />
+      );
     }
   }, [safe, navState]);
 
@@ -77,12 +90,34 @@ function App() {
   }, [location, safe]);
 
 
+  useEffect(() => {
+    fetch("/upcomingMovies", {
+      headers: {
+        location: location,
+        Filter: safe,
+      },
+    })
+      .then((res) => res.json())
+      .then((arr) => setNewMovieArray(arr));
+  }, [location, safe]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => {
+      window.scrollY >= 300 ?
+        setToastVisible(true) : setToastVisible(false)
+    })
+  })
+
+
+
   return (
     <>
-      <Search></Search>
-      {!safe && <div className='sticky-top'><DangerToast /></div>}
 
-      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} safe={safe} />
+      {(!safe && isToastVisible) && <div className='sticky-top'><DangerToast isToastVisible={isToastVisible} setToastVisible={setToastVisible} /></div>}
+
+      <NavigationBar navState={navState} setNavState={setNavState} setSafe={setSafe} isDanger={isDanger} setDanger={setDanger} safe={safe} isToastVisible={isToastVisible} />
+      <Search></Search>
+
       {navState}
       {moviePopup === true && <MoviePopup selection={selection} setMoviePopup={setMoviePopup} />}
       {showPopup === true && <ShowPopup selection={selection} setShowPopup={setShowPopup} />}

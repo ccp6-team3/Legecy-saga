@@ -2,21 +2,34 @@ const fetch = (...args) =>
 	import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const express = require("express");
 const app = express();
-const knex = require("./knex");
 const port = process.env.PORT || 8080;
-require("dotenv").config({ path: "./.env.local" });
+require("dotenv").config({ path: "../.env.local" });
 
 const API_KEY = process.env.API_KEY_TMDB;
 
 const imagePath = "https://image.tmdb.org/t/p/original";
 
+//Knex functions
+const {
+  getReviewsForMovie,
+  getReviewsForTVShow,
+  addReviewForMovies,
+  addReviewForTVShows,
+} = require("./middleware/model");
+
+app.use(express.json());
+
+//routing for jwt
+app.use("/auth", require("./jwt/jwt.login"));
+app.use("/auth", require("./jwt/jwt.users"));
+app.use("/auth", require("./jwt/jwt.signup"));
+
 // have node serve the files for our built React app
 const path = require("path");
 app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
-app.use(express.json());
-
 const filterMovies = (movieID) => {
+
 	let result;
 	const forKids = fetch(
 		`https://api.themoviedb.org/3/movie/${movieID}/release_dates?api_key=${API_KEY}`
@@ -46,6 +59,7 @@ const filterMovies = (movieID) => {
 
 //Get request for popular movies
 app.get("/popularMovies", async (req, res) => {
+
 	let popularMoviesArray = [];
 	const adultFilter = req.get("Filter");
 	const fetchedData = await fetch(
@@ -123,6 +137,7 @@ app.get("/movieCredits", (req, res) => {
 
 //Get request to get reviews for a movie given the movie ID
 app.get("/reviewsMovie", async (req, res) => {
+
 	const movieID = req.get("movieID");
 	const reviewsArray = [];
 	const UsersReviews = await knex
@@ -540,26 +555,52 @@ app.get("/userCountry", (req, res) => {
 });
 
 //Prototype for search bar
-app.get("/search", (req, res) => {
+app.get("/search/:searchName", async (req, res) => {
 	let searchMoviesArray = [];
+	console.log(req.params.searchName);
 	let SEARCH_KEY = "jujutsu";
 	fetch(
-		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${SEARCH_KEY}`
+		`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${req.params.searchName}`
 	)
 		.then((result) => result.json())
 		.then(async (data) => {
 			const movies = data.results;
 			movies.forEach((movie) => {
 				let movieInfo = {};
-				// movieInfo.movieID = movie.id;
-				// movieInfo.moviePoster = imagePath + movie.poster_path;
+				movieInfo.movieID = movie.id;
+				movieInfo.moviePoster = imagePath + movie.poster_path;
 				movieInfo.movieTitle = movie.title;
-				// movieInfo.movieDescription = movie.overview;
-				// movieInfo.movieRating = movie.vote_average;
-				// movieInfo.releaseDate = movie.release_date;
+				movieInfo.movieDescription = movie.overview;
+				movieInfo.movieRating = movie.vote_average;
+				movieInfo.releaseDate = movie.release_date;
 				searchMoviesArray.push(movieInfo);
 			});
-			console.log(searchMoviesArray);
+			return searchMoviesArray;
+		})
+		.then((resultArray) => res.send(resultArray));
+	// return searchMoviesArray;
+});
+
+//Prototype for search bar
+app.get("/search2", (req, res) => {
+	let searchTVArray = [];
+	let SEARCH_KEY = "jujutsu";
+	fetch(
+		`https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${SEARCH_KEY}`
+	)
+		.then((result) => result.json())
+		.then(async (data) => {
+			const TvInfo = data.results;
+			TvInfo.forEach((element) => {
+				let TvInfo = {};
+				TvInfo.TvID = element.id;
+				TvInfo.TvPoster = imagePath + element.poster_path;
+				TvInfo.TvTitle = element.name;
+				TvInfo.TvDescription = element.overview;
+				TvInfo.TvRating = element.vote_average;
+				searchTVArray.push(TvInfo);
+			});
+			console.log(searchTVArray);
 		});
 });
 
@@ -571,3 +612,5 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`);
 });
+
+module.exports = app;

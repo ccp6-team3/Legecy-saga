@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const NavigationBar = (props) => {
   const { navState, setNavState, setSafe, isDanger, setDanger, safe } = props;
@@ -77,4 +78,4 @@ const NavigationBar = (props) => {
   );
 }
 
-export default NavigationBar
+export default NavigationBar;

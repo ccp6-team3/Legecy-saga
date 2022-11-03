@@ -5,7 +5,7 @@ import '../styles/Toast.css'
 import pg13 from '../pg13.jpg'
 
 
-function DangerToast() {
+function DangerToast(props) {
     const [show, setShow] = useState(true);
     const toggleShow = () => setShow(!show)
 
