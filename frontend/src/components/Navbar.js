@@ -36,7 +36,7 @@ const NavigationBar = (props) => {
 
 
 
-        <Button className="float-end" size="lg" variant={isDanger ? "outline-danger" : "warning"}
+        <Button className="float-end" size="lg" variant={isDanger ? "outline-success" : "warning"}
           onClick={() => {
             homeRef.current.click()
             setSafe(!safe)
