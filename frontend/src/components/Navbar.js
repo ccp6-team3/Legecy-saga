@@ -1,14 +1,15 @@
 import Nav from 'react-bootstrap/Nav'
 import '../styles/Navbar.css';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import logo from "../sagaLarge.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const NavigationBar = (props) => {
-  const { navState, setNavState, setSafe, isDanger, setDanger } = props;
+  const { navState, setNavState, setSafe, isDanger, setDanger, safe } = props;
   const [adultFilter, setAdultFilter] = useState("Off")
-
+  const homeRef = useRef(null)
 
   const toggleFilter = () => {
     if (adultFilter === "Off") {
@@ -16,53 +17,97 @@ const NavigationBar = (props) => {
     } else {
       return "Off";
     }
-  }
+  };
 
   useEffect(() => {
     if (adultFilter === "On") {
-      setSafe(true)
+      setSafe(true);
+    } else {
+      setSafe(false);
     }
-    else {
-      setSafe(false)
-    }
-  }, [adultFilter])
+  }, [adultFilter]);
 
   return (
     <>
-
-      <div className={isDanger ? "title-background" : "title-background-danger"}>
-        <img className={isDanger ? "title" : "title-danger"} alt="saga logo" src={logo} onClick={() => setNavState("home")} />
-        <Button className="float-end" size="lg" variant={isDanger ? "outline-danger" : "warning"} onClick={() => { setAdultFilter(toggleFilter); setDanger(!isDanger) }} >Safe mode: {`${adultFilter}`}</Button>
-      </div>
-      <Nav variant="tabs" className="nav justify-content-center" defaultActiveKey="#home">
-        <Nav.Item className="nav-item">
-          <Nav.Link onClick={() => {
-            setNavState("home")
+      <div
+        className={isDanger ? "title-background" : "title-background-danger"}
+      >
+        <img
+          className={isDanger ? "title" : "title-danger"}
+          alt="saga logo"
+          src={logo}
+          onClick={() => setNavState("home")}
+        />
+        <Button
+          className="float-end"
+          size="lg"
+          variant={isDanger ? "outline-danger" : "warning"}
+          onClick={() => {
+            setAdultFilter(toggleFilter);
+            setDanger(!isDanger);
           }}
-            href="#home">Home</Nav.Link>
+        >
+          Safe mode: {`${adultFilter}`}
+        </Button>
+      </div>
+      <Nav
+        variant="tabs"
+        className="nav justify-content-center"
+        defaultActiveKey="#home"
+      >
+        <Nav.Item className="nav-item" >
+          <Nav.Link
+            onClick={() => {
+              setNavState("home");
+            }}
+            href="#home"
+          >
+            Home
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("movie")
-          }
-          }
-            href="#movie">Movies</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("movie");
+            }}
+            href="#movie"
+          >
+            Movies
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("shows")
-          }
-          } href="#shows">TV Shows</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("shows");
+            }}
+            href="#shows"
+          >
+            TV Shows
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={() => {
-            setNavState("upcoming")
-          }
-          } href="#upcoming">Upcoming</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              setNavState("upcoming");
+            }}
+            href="#upcoming"
+          >
+            Upcoming
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            onClick={() => {
+              setNavState("user");
+            }}
+            href="#user"
+          >
+            User
+          </Nav.Link>
         </Nav.Item>
       </Nav>
     </>
   );
-}
+};
 
 export default NavigationBar

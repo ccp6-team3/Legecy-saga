@@ -5,8 +5,8 @@ const authToken = require("../middleware/authToken");
 
 router.use(express.json());
 
-router.get("/users", authToken, async (req, res) => {
-  await getUserByEmail(req.decoded.userEmail).then((data) => {
+router.post("/user", authToken, async (req, res) => {
+  await getUserByEmail(req.userEmail).then((data) => {
     res.send(data);
   });
 });
