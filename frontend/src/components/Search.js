@@ -43,7 +43,7 @@ const Search = (props) => {
 
 	return (
 		<>
-			{console.log(search)}
+			{/* {console.log(search)} */}
 			<p>This is from the Search</p>
 			<input
 				onChange={(e) => {
