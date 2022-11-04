@@ -20,7 +20,7 @@ const Login = (props) => {
         <h1>Log in</h1>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label className="form-label">Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter your email address"
@@ -34,7 +34,7 @@ const Login = (props) => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label className="form-label">Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -45,12 +45,13 @@ const Login = (props) => {
           </Form.Group>
 
           <Button
+            className="button"
             variant="primary"
             type="submit"
             onClick={async () => {
-              await authService.login(email, password).then((data) => {
-                authService.getUserData(data.accessToken).then((data) => {
-                  setUser(data);
+              await authService.login(email, password).then((res) => {
+                authService.getUserData(res.accessToken).then((res) => {
+                  localStorage.setItem("userData", JSON.stringify(res));
                   if (err === "") {
                     setLoginView("profile");
                   }
@@ -62,7 +63,7 @@ const Login = (props) => {
           </Button>
 
           <br />
-          <div id="signup-dev">
+          <div id="signup-div">
             <Form.Label>Need an Account?</Form.Label>
             <Button
               id="signup"

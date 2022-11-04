@@ -45,6 +45,7 @@ const getUserData = async (token) => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("userData")
 };
 
 const getCurrentUser = () => {

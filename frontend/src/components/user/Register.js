@@ -24,8 +24,8 @@ const Register = (props) => {
       <Container className="registration">
         <h1>Registration</h1>
         <Form>
-        <Form.Group className="mb-3">
-            <Form.Label>User Name</Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label className="form-label">User Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter your email address"
@@ -36,7 +36,7 @@ const Register = (props) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label className="form-label">Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter your email address"
@@ -50,19 +50,18 @@ const Register = (props) => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label className="form-label">Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
               onChange={(e) => {
                 setPassword(e.target.value);
-                console.log(password)
               }}
             />
           </Form.Group>
 
           {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Repeat Your Password</Form.Label>
+            <Form.Label className="form-label">Repeat Your Password</Form.Label>
             <Form.Control type="password" placeholder="Repeat your password" 
               onChange={(e) => {
                 if(!e.target.value === password){
@@ -77,10 +76,10 @@ const Register = (props) => {
           </Form.Group> */}
 
           <Button
+            className="button"
             variant="primary"
             type="submit"
             onClick={() => {
-              console.log(email, password)
               authService.signup(userName, email, password);
               if (err === "") {
                 setLoginView("login");
@@ -91,7 +90,7 @@ const Register = (props) => {
           </Button>
           <br />
 
-          <div className="login-dev">
+          <div className="login-div">
             <Form.Label>Do you have any accoust?</Form.Label>
             <Button
               id="signup"

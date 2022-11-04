@@ -9,22 +9,29 @@ import Profile from "./user/Profile";
 const User = (props) => {
   const {} = props;
 
-  const [user, setUser] = useState("");
-  const [loginView, setLoginView] = useState("login");
+  const [loginView, setLoginView] = useState("");
+
+  useEffect(()=>{
+    if(!localStorage.getItem("user")){
+      setLoginView("login")
+    } else {
+      setLoginView("profile")
+    }
+  },[])
 
   return (
     <>
-      <div className="user-dev">
+      <div className="user-div">
         {loginView === "login" && (
-          <Login user={user} setUser={setUser} setLoginView={setLoginView} />
+          <Login setLoginView={setLoginView} />
         )}
 
         {loginView === "registration" && (
-          <Register user={user} setUser={setUser} setLoginView={setLoginView} />
+          <Register setLoginView={setLoginView} />
         )}
 
         {loginView === "profile" && (
-          <Profile user={user} setUser={setUser} setLoginView={setLoginView} />
+          <Profile setLoginView={setLoginView} />
         )}
       </div>
     </>

@@ -1,3 +1,36 @@
-h1, h2{
-color: black;
+.user-div{
+  background-color: rgb(40, 50, 69); 
+  padding-bottom: 30px;
+}
+
+.form-label{
+  color: azure;
+}
+
+#signup-div, #login-div{
+  margin-top: 10px;
+}
+
+.button{
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* profile */
+
+.profile-card{
+  padding: 10%;
+}
+
+.user-name{
+  font-size: 32px;
+}
+
+.card-title{
+  margin: 10px;
+}
+
+.card-text{
+  margin-left: 20px;
+  color: black;
 }

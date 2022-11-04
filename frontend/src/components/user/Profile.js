@@ -5,28 +5,33 @@ import authService from "../services/auth.service";
 
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 const Profile = (props) => {
-  const { user, setLoginView } = props;
+  const { setLoginView } = props;
 
   const [err, setErr] = useState("");
 
+  const user = JSON.parse(localStorage.getItem("userData"));
 
   return (
     <>
-      {user === "" && (
-        <Button/>
-      )}
-
       <Container className="profile">
         <h1>Your Profile</h1>
-        <h2>user id: {user[0].userId}</h2>
-        <h2>username: {user[0].userName}</h2>
-        <h2>email address: {user[0].userEmail}</h2>
+
+        <Card className="profile-card">
+          <Card.Title className="user-name">{user[0].userName}</Card.Title>
+          <Card></Card>
+          <Card.Title className="card-title">user id:</Card.Title>
+          <Card.Text className="card-text">{user[0].userId}</Card.Text>
+          <Card.Title className="card-title">email address</Card.Title>
+          <Card.Text className="card-text">{user[0].userEmail}</Card.Text>
+        </Card>
         <Button
-          onClick={()=>{
-            // authService.logout()
-            setLoginView("login")
+          className="button"
+          onClick={() => {
+            authService.logout();
+            setLoginView("login");
           }}
         >
           Log out
