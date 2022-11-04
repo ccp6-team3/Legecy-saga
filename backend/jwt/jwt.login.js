@@ -20,18 +20,26 @@ router.post("/login", async (req, res) => {
     return user.userEmail === userEmail;
   });
 
-  let isMatch 
-    = await bcrypt.compare(userPassword, user.userPassword);
-  // if (userPassword === user.userPassword) isMatch = true;
+  if(!user) {
+    res.status(400).send({
+      error: "Invalid credentials"
+    });
+  }
+
+
+  let isMatch = await bcrypt.compare(userPassword, user.userPassword);
+  // if (userPassword === user.userPassword) isMatch =true;
 
 
   if (!isMatch) {
-    return res.send("Email or password is invalid");
+    res.status(401).send({
+      error: "Email or password is invalid"
+    });
   }
 
   const accessToken = await jwt.sign({ userEmail }, process.env.SECRET_KEY, {
     algorithm: "HS256",
-    expiresIn: "1m",
+    expiresIn: "1h",
   });
 
   const refreshToken = await jwt.sign({ userEmail }, process.env.SECRET_KEY, {

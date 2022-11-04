@@ -7,21 +7,17 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 const Profile = (props) => {
-  const { setLoginView } = props;
+  const { user, setLoginView } = props;
 
-  const [user, setUser] = useState("");
   const [err, setErr] = useState("");
 
-  useEffect(() => {
-    const userToken = JSON.parse(localStorage.getItem("user"))
-    authService.getUserData(userToken.accessToken).then((data) => {
-      setUser(data);
-    });
-    console.log(user)
-  },[]);
 
   return (
     <>
+      {user === "" && (
+        <Button/>
+      )}
+
       <Container className="profile">
         <h1>Your Profile</h1>
         <h2>user id: {user[0].userId}</h2>

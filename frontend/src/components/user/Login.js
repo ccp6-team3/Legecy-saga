@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const Login = (props) => {
-  const { setLoginView } = props;
+  const { user, setUser, setLoginView } = props;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,10 +48,14 @@ const Login = (props) => {
             variant="primary"
             type="submit"
             onClick={async () => {
-              await authService.login(email, password);
-              if (err === "") {
-                await setLoginView("profile");
-              }
+              await authService.login(email, password).then((data) => {
+                authService.getUserData(data.accessToken).then((data) => {
+                  setUser(data);
+                  if (err === "") {
+                    setLoginView("profile");
+                  }
+                });
+              });
             }}
           >
             Log in

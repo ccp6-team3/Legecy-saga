@@ -9,23 +9,22 @@ import Profile from "./user/Profile";
 const User = (props) => {
   const {} = props;
 
+  const [user, setUser] = useState("");
   const [loginView, setLoginView] = useState("login");
 
   return (
     <>
       <div className="user-dev">
         {loginView === "login" && (
-          <Login
-            setLoginView={setLoginView}
-          />
+          <Login user={user} setUser={setUser} setLoginView={setLoginView} />
         )}
 
         {loginView === "registration" && (
-          <Register setLoginView={setLoginView} />
+          <Register user={user} setUser={setUser} setLoginView={setLoginView} />
         )}
 
         {loginView === "profile" && (
-          <Profile setLoginView={setLoginView}/>
+          <Profile user={user} setUser={setUser} setLoginView={setLoginView} />
         )}
       </div>
     </>

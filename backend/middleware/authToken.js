@@ -9,9 +9,8 @@ const authToken = async (req, res, next) => {
 
     await jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        return res.status(403).send({
-          isSuccess: false,
-          message: "Invalid token",
+        res.status(403).send({
+          error: "Invalid token"
         });
       } else {
         req.userEmail = decoded.userEmail;
@@ -19,9 +18,8 @@ const authToken = async (req, res, next) => {
       }
     });
   } else {
-    return res.status(401).send({
-      isSuccess: false,
-      message: "Token not found",
+    res.status(404).send({
+      error: "Token not found"
     });
   }
 };
