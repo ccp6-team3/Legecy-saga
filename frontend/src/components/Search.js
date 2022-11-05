@@ -2,37 +2,31 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 
 const Search = (props) => {
-	// const { search } = props;
-	const [search, setSearch] = useState([""]);
-	const [searchResultArray, setSearchResultArray] = useState([]);
+	const {
+		setSelection,
+		setMoviePopup,
+		setShowPopup,
+		searchMoviesResultArray,
+		searchTVResultArray,
+	} = props;
 
-	useEffect(() => {
-		console.log(search);
-		fetch(`/search/${search}`)
-			.then((res) => res.json())
-			.then((data) => {
-				// console.log(data);
-				setSearchResultArray(data);
-			});
-	}, [search]);
-
-	const renderCard = (card) => {
+	const renderCardMovies = (card) => {
 		return (
 			<Card key={card.movieID} className="movieCard">
 				<Card.Img
-					// onClick={() => {
-					// 	setMoviePopup(true);
-					// 	setSelection(card);
-					// }}
+					onClick={() => {
+						setMoviePopup(true);
+						setSelection(card);
+					}}
 					className="moviePoster"
 					alt={`${card.movieTitle} poster`}
 					src={card.moviePoster}
 				></Card.Img>
 				<Card.Title
-					// onClick={() => {
-					// 	setMoviePopup(true);
-					// 	setSelection(card);
-					// }}
+					onClick={() => {
+						setMoviePopup(true);
+						setSelection(card);
+					}}
 					className="movieTitle"
 				>
 					{card.movieTitle}
@@ -41,20 +35,50 @@ const Search = (props) => {
 		);
 	};
 
+	const renderCardTVShows = (card) => {
+		return (
+			<Card key={card.TvID} className="movieCard">
+				<Card.Img
+					onClick={() => {
+						setShowPopup(true);
+						console.log(card);
+						setSelection(card);
+					}}
+					className="moviePoster"
+					alt={`${card.TvTitle} poster`}
+					src={card.TvPoster}
+				></Card.Img>
+				<Card.Title
+					onClick={() => {
+						setShowPopup(true);
+						setSelection(card);
+					}}
+					className="movieTitle"
+				>
+					{card.TvTitle}
+				</Card.Title>
+			</Card>
+		);
+	};
+
 	return (
 		<>
-			{/* {console.log(search)} */}
-			<p>This is from the Search</p>
-			<input
-				onChange={(e) => {
-					setSearch(e.target.value);
-				}}
-			></input>
-			<div className="movieSection">{searchResultArray.map(renderCard)}</div>
-			{/* {searchResultArray.forEach((data) => {
-				<div className="movieHeader">HELLO</div>;
-				console.log(data);
-			})} */}
+			{searchMoviesResultArray.length > 0 ? (
+				<h1 className="movieHeader">Movie Results</h1>
+			) : (
+				""
+			)}
+			<div className="movieSection">
+				{searchMoviesResultArray.map(renderCardMovies)}
+			</div>
+			{searchMoviesResultArray.length > 0 ? (
+				<h1 className="movieHeader">TV Show Results</h1>
+			) : (
+				""
+			)}
+			<div className="movieSection">
+				{searchTVResultArray.map(renderCardTVShows)}
+			</div>
 		</>
 	);
 };

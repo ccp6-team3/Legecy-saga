@@ -1,6 +1,6 @@
 import "../styles/User.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect, Profiler } from "react";
+import { useState, useEffect } from "react";
 
 import Login from "./user/Login";
 import Register from "./user/Register";

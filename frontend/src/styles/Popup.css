@@ -34,3 +34,8 @@ h5 {
   height: 3rem;
   background-color:rgb(40, 50, 69);
 }
+
+.watchlist_button {
+  background-color: rgba(14, 179, 25, 0.881);
+  width: 12em;
+}

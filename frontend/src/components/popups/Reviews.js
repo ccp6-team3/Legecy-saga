@@ -11,7 +11,12 @@ const Reviews = (props) => {
   const {selection} = props;
 
   const movieID = selection.movieID
-
+  let userName = "";
+  if(localStorage.getItem("userData")){
+  const user = JSON.parse(localStorage.getItem("userData"));
+  userName = user[0].userName;
+  }
+  
   const [reviews, setReviews] = useState([])
   const [userReview, setUserReview] = useState("")
   const [submit, setSubmit] = useState(false);
@@ -54,6 +59,7 @@ const Reviews = (props) => {
       },
       body: JSON.stringify({
         movieID: movieID,
+        userName: userName,
         review: userReview
       })
     })
@@ -72,7 +78,7 @@ const Reviews = (props) => {
       <Form className="form">
         <Form.Group controlId="exampleForm.ControlTextarea1" className="form-group">
           <Form.Label>
-            Your review will be anonymous, so please share your opinion.
+            If you are not logged in, your review will be anonymous. 
           </Form.Label>
           <Form.Control as="textarea" rows="3" className="review-input" onChange={(e) => setUserReview(e.target.value)} type="text" placeholder="Write your review here" />
         </Form.Group>

@@ -14,6 +14,10 @@ const MoviePopup = (props) => {
     setMoviePopup(false)
   }  
 
+  const saveWatchlist = () => {
+      console.log(selection.movieID)
+  }
+
   return (
     <Modal size="lg" show={true} onHide={closePopup}>
       <Card className="popup-container">
@@ -25,6 +29,7 @@ const MoviePopup = (props) => {
           <h3 className="description">Release: {selection.releaseDate}</h3>
           <p className="description">{selection.movieDescription ? selection.movieDescription : <em>*No description*</em>}</p>
         </Card.Body>
+        {/* <button className="watchlist_button" onClick={saveWatchlist}>+ watchlist</button> */}
         <Reviews selection={selection} />
       </Card>
     </Modal>

@@ -11,6 +11,12 @@ const TV_Reviews = (props) => {
   const {selection} = props;
 
   const TvID = selection.TvID
+  let userName = "";
+  console.log(localStorage.getItem("userData"));
+  if(localStorage.getItem("userData")){
+  const user = JSON.parse(localStorage.getItem("userData"));
+  userName = user[0].userName;
+  }
 
   const [TVreviews, setTVReviews] = useState([])
   const [userReview, setUserReview] = useState("")
@@ -54,6 +60,7 @@ const TV_Reviews = (props) => {
       },
       body: JSON.stringify({
         tv_show_id: TvID,
+        userName: userName,
         review: userReview
       })
     })
@@ -72,7 +79,7 @@ const TV_Reviews = (props) => {
       <Form className="form">
         <Form.Group controlId="exampleForm.ControlTextarea1" className="form-group">
           <Form.Label>
-            Your review will be anonymous, so please share your opinion.
+          If you are not logged in, your review will be anonymous. 
           </Form.Label>
           <Form.Control as="textarea" rows="3" className="review-input" onChange={(e) => setUserReview(e.target.value)} type="text" placeholder="Write your review here" />
         </Form.Group>
