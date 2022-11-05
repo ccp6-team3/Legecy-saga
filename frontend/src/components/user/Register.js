@@ -28,7 +28,7 @@ const Register = (props) => {
             <Form.Label className="form-label">User Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your email address"
+              placeholder="Enter your user name"
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
