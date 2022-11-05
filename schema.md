@@ -23,7 +23,7 @@ Table users {
 ## Movie Review Table
 
 ```
-Table movie_review {
+Table movie_reviews {
   id serial [pk]
   movie_id int(32) [nn, index]
   review varchar(4000)
